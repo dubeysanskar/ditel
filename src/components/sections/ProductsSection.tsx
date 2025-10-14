@@ -6,48 +6,40 @@ import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import products from "@/data/products.json";
 import { getProductEnquiryLink } from "@/lib/whatsapp";
-import { ExternalLink } from "lucide-react";
 
 interface Product {
   id: string;
   name: string;
   category: string;
   subcategory: string;
-  price: number;
-  currency: string;
   shortDescription: string;
   imageUrl: string;
   sku: string;
-  stock: number;
-  urlSlug: string;
+  features?: string[];
 }
 
-const conditionGrades = {
-  "A+": "Excellent - Like new condition, minimal signs of use",
-  "A": "Very Good - Light signs of use, fully functional",
-  "B": "Good - Moderate signs of use, fully functional",
-  "C": "Fair - Visible signs of use, fully functional"
-};
-
-const warrantyInfo = {
-  "Laptops": "1 Year Comprehensive Warranty",
-  "ISP": "Service Level Agreement (SLA) Included",
-  "CCTV": "2 Year Parts & Installation Warranty"
-};
-
-const categories = ["All", "Laptops", "ISP", "CCTV"];
-const laptopSubcategories = ["All Laptops", "Normal", "Apple/Mac", "Gaming"];
+const categories = ["All", "Refurbished Laptops", "ISP Solutions", "CCTV Solutions"];
+const laptopSubcategories = [
+  "All",
+  "Laptop",
+  "Apple Mac Book",
+  "Gaming Laptop",
+  "Servers",
+  "Desktop",
+  "Monitors",
+  "IT Hardware & Networking Devices"
+];
 
 export function ProductsSection() {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedLaptopSubcategory, setSelectedLaptopSubcategory] = useState("All Laptops");
+  const [selectedLaptopSubcategory, setSelectedLaptopSubcategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const filteredProducts = products.filter((product: Product) => {
     if (selectedCategory === "All") return true;
     if (selectedCategory !== product.category) return false;
     
-    if (selectedCategory === "Laptops" && selectedLaptopSubcategory !== "All Laptops") {
+    if (selectedCategory === "Refurbished Laptops" && selectedLaptopSubcategory !== "All") {
       return product.subcategory === selectedLaptopSubcategory;
     }
     
@@ -68,9 +60,8 @@ export function ProductsSection() {
             Our <span className="text-gradient-primary">Products</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Explore our extensive range of certified refurbished laptops from top brands 
-            like Dell, HP, Lenovo, Apple, and ASUS, along with networking equipment and 
-            surveillance systems.
+            Quality refurbished laptops, professional ISP solutions, and advanced CCTV surveillance systems. 
+            Contact us via WhatsApp for detailed quotations and specifications.
           </p>
         </motion.div>
 
@@ -82,8 +73,8 @@ export function ProductsSection() {
               variant={selectedCategory === category ? "default" : "outline"}
               onClick={() => {
                 setSelectedCategory(category);
-                if (category !== "Laptops") {
-                  setSelectedLaptopSubcategory("All Laptops");
+                if (category !== "Refurbished Laptops") {
+                  setSelectedLaptopSubcategory("All");
                 }
               }}
               className="rounded-full"
@@ -94,7 +85,7 @@ export function ProductsSection() {
         </div>
 
         {/* Laptop Subcategory Filters */}
-        {selectedCategory === "Laptops" && (
+        {selectedCategory === "Refurbished Laptops" && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
@@ -104,7 +95,7 @@ export function ProductsSection() {
               <Badge
                 key={subcategory}
                 variant={selectedLaptopSubcategory === subcategory ? "default" : "outline"}
-                className="cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2"
+                className="cursor-pointer hover:bg-primary/10 transition-colors px-4 py-2 text-xs"
                 onClick={() => setSelectedLaptopSubcategory(subcategory)}
               >
                 {subcategory}
@@ -134,18 +125,10 @@ export function ProductsSection() {
                   />
                   <Badge
                     variant="secondary"
-                    className="absolute top-2 left-2 bg-background/90 backdrop-blur-sm text-foreground"
+                    className="absolute top-2 left-2 bg-background/90 backdrop-blur-sm text-foreground text-xs"
                   >
-                    {product.category}
+                    {product.subcategory}
                   </Badge>
-                  {product.category === "Laptops" && (
-                    <Badge
-                      variant="outline"
-                      className="absolute top-2 right-2 bg-background/90 backdrop-blur-sm text-foreground border-foreground/20"
-                    >
-                      {product.subcategory}
-                    </Badge>
-                  )}
                 </div>
 
                 {/* Product Info */}
@@ -154,45 +137,40 @@ export function ProductsSection() {
                     {product.name}
                   </h3>
                   
-                  <div className="mb-3">
-                    {product.price && (
-                      <p className="text-2xl font-bold text-primary mb-1">
-                        ₹{product.price.toLocaleString()}
-                      </p>
-                    )}
-                    {product.category === "Laptops" && (
-                      <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                        <Badge variant="outline" className="text-xs">
-                          Grade A+
-                        </Badge>
-                        <span>•</span>
-                        <span>1 Year Warranty</span>
-                      </div>
-                    )}
-                  </div>
-
-                  <p className="text-sm text-muted-foreground mb-4 line-clamp-2 flex-1">
+                  <p className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-1">
                     {product.shortDescription}
                   </p>
 
-                  <div className="flex gap-2 mt-auto">
+                  <div className="space-y-3 mt-auto">
+                    <p className="text-base font-semibold text-primary">
+                      Request quotation via WhatsApp
+                    </p>
+                    
                     <a
                       href={getProductEnquiryLink(product.name)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1"
+                      className="block"
                     >
-                      <Button variant="default" size="sm" className="w-full">
+                      <Button 
+                        variant="default" 
+                        size="sm" 
+                        className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white"
+                      >
+                        <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
                         WhatsApp
                       </Button>
                     </a>
+                    
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1"
+                      className="w-full"
                       onClick={() => setSelectedProduct(product)}
                     >
-                      Details
+                      View Details
                     </Button>
                   </div>
                 </div>
@@ -233,21 +211,17 @@ export function ProductsSection() {
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Badge variant="secondary">{selectedProduct.category}</Badge>
-                    {selectedProduct.category === "Laptops" && (
-                      <Badge variant="outline">{selectedProduct.subcategory}</Badge>
-                    )}
+                    <Badge variant="outline">{selectedProduct.subcategory}</Badge>
                   </div>
 
-                  {selectedProduct.price && (
-                    <div>
-                      <p className="text-3xl font-bold text-primary">
-                        ₹{selectedProduct.price.toLocaleString()}
-                      </p>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        SKU: {selectedProduct.sku}
-                      </p>
-                    </div>
-                  )}
+                  <div>
+                    <p className="text-2xl font-bold text-primary mb-1">
+                      Request quotation via WhatsApp
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      SKU: {selectedProduct.sku}
+                    </p>
+                  </div>
 
                   <div>
                     <h4 className="font-semibold mb-2">Description</h4>
@@ -256,54 +230,43 @@ export function ProductsSection() {
                     </p>
                   </div>
 
-                  {/* Condition & Warranty Info */}
-                  {selectedProduct.category === "Laptops" && (
+                  {/* Features for ISP/CCTV */}
+                  {selectedProduct.features && selectedProduct.features.length > 0 && (
                     <div className="space-y-3 p-4 rounded-lg bg-muted/50">
-                      <div>
-                        <h4 className="font-semibold text-sm mb-1">Condition Grade: A+</h4>
-                        <p className="text-xs text-muted-foreground">
-                          {conditionGrades["A+"]}
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-sm mb-1">Warranty</h4>
-                        <p className="text-xs text-muted-foreground">
-                          {warrantyInfo[selectedProduct.category as keyof typeof warrantyInfo]}
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="font-semibold text-sm mb-1">What's Included</h4>
-                        <ul className="text-xs text-muted-foreground space-y-1">
-                          <li>• Original Charger</li>
-                          <li>• Laptop Bag</li>
-                          <li>• Quality Certification</li>
-                          <li>• Warranty Card</li>
-                        </ul>
-                      </div>
+                      <h4 className="font-semibold text-sm mb-2">Key Features</h4>
+                      <ul className="text-sm text-muted-foreground space-y-2">
+                        {selectedProduct.features.map((feature, idx) => (
+                          <li key={idx}>• {feature}</li>
+                        ))}
+                      </ul>
                     </div>
                   )}
 
-                  {selectedProduct.stock > 0 ? (
-                    <p className="text-sm text-secondary font-medium">
-                      ✓ In Stock ({selectedProduct.stock} available)
+                  {/* Specifications Note */}
+                  <div className="p-4 rounded-lg bg-muted/50">
+                    <p className="text-sm text-muted-foreground">
+                      Full specifications, pricing, and availability details are provided upon request. 
+                      Contact us via WhatsApp for a detailed quotation tailored to your needs.
                     </p>
-                  ) : (
-                    <p className="text-sm text-destructive font-medium">
-                      Out of Stock
-                    </p>
-                  )}
+                  </div>
 
-                  {/* CTA Buttons */}
-                  <div className="flex gap-3 pt-4">
+                  {/* CTA Button */}
+                  <div className="pt-4">
                     <a
                       href={getProductEnquiryLink(selectedProduct.name)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1"
+                      className="block"
                     >
-                      <Button variant="default" size="lg" className="w-full">
-                        <ExternalLink className="mr-2 h-4 w-4" />
-                        Enquire on WhatsApp
+                      <Button 
+                        variant="default" 
+                        size="lg" 
+                        className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white"
+                      >
+                        <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                        Get Quotation via WhatsApp
                       </Button>
                     </a>
                   </div>

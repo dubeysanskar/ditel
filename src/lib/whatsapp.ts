@@ -18,7 +18,7 @@ export function getGeneralEnquiryLink(): string {
 }
 
 export function getProductEnquiryLink(productName: string, companyName: string = "Ditel Network Solutions"): string {
-  return whatsappLink(`Hi, I'm interested in ${productName} from ${companyName}. Please contact me.`);
+  return whatsappLink(`Hi, I'm interested in ${productName}. Please send a quotation & availability.`);
 }
 
 export function getServiceEnquiryLink(serviceName: string): string {

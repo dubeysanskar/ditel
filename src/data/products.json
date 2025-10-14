@@ -1,158 +1,544 @@
 [
   {
-    "id": "isp-router-001",
-    "name": "Dual-Band Wi-Fi Router",
-    "category": "ISP",
-    "subcategory": "Equipment",
-    "price": 2499,
-    "currency": "INR",
-    "shortDescription": "High-speed dual-band router with advanced security features for seamless connectivity.",
-    "imageUrl": "https://images.unsplash.com/photo-1606904825846-647eb07f5be2?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "ISP-RTR-001",
-    "stock": 25,
-    "urlSlug": "dual-band-wifi-router"
+    "id": "laptop-dell-generic",
+    "name": "Refurbished Dell Laptop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Laptop",
+    "shortDescription": "Quality refurbished Dell laptops with verified performance. Key specs available on request.",
+    "imageUrl": "/Refurbishedlaptops/Dell Laptop.jpeg",
+    "sku": "DELL-GEN-001"
   },
   {
-    "id": "isp-modem-001",
-    "name": "Fiber Optic Modem",
-    "category": "ISP",
-    "subcategory": "Equipment",
-    "price": 3999,
-    "currency": "INR",
-    "shortDescription": "Gigabit fiber modem for ultra-fast internet speeds up to 1Gbps.",
-    "imageUrl": "https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "ISP-MDM-001",
-    "stock": 15,
-    "urlSlug": "fiber-optic-modem"
+    "id": "laptop-hp-generic",
+    "name": "Refurbished HP Laptop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Laptop",
+    "shortDescription": "Reliable refurbished HP laptops tested for quality. Key specs available on request.",
+    "imageUrl": "/Refurbishedlaptops/HP Laptop.jpeg",
+    "sku": "HP-GEN-001"
   },
   {
-    "id": "cctv-dome-001",
-    "name": "4MP Dome Camera",
-    "category": "CCTV",
-    "subcategory": "Indoor",
-    "price": 4500,
-    "currency": "INR",
-    "shortDescription": "4MP resolution dome camera with night vision and motion detection for indoor surveillance.",
-    "imageUrl": "https://images.unsplash.com/photo-1565814636199-ae8133055c1c?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "CCTV-DOME-001",
-    "stock": 40,
-    "urlSlug": "4mp-dome-camera"
+    "id": "laptop-lenovo-generic",
+    "name": "Refurbished Lenovo Laptop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Laptop",
+    "shortDescription": "Certified refurbished Lenovo laptops for business and personal use. Key specs available on request.",
+    "imageUrl": "/Refurbishedlaptops/Lenovo Laptop.jpeg",
+    "sku": "LNVO-GEN-001"
   },
   {
-    "id": "cctv-bullet-001",
-    "name": "5MP Bullet Camera",
-    "category": "CCTV",
-    "subcategory": "Outdoor",
-    "price": 5999,
-    "currency": "INR",
-    "shortDescription": "Weatherproof 5MP bullet camera with 30m night vision and IP67 rating.",
-    "imageUrl": "https://images.unsplash.com/photo-1582139329536-e7284fece509?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "CCTV-BLT-001",
-    "stock": 30,
-    "urlSlug": "5mp-bullet-camera"
+    "id": "laptop-touchscreen-generic",
+    "name": "Refurbished Touchscreen Laptop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Laptop",
+    "shortDescription": "Interactive touchscreen laptops for enhanced productivity. Key specs available on request.",
+    "imageUrl": "/Refurbishedlaptops/Touchscreen Laptop.jpeg",
+    "sku": "TOUCH-GEN-001"
   },
   {
-    "id": "cctv-nvr-001",
-    "name": "8-Channel NVR System",
-    "category": "CCTV",
-    "subcategory": "Recorders",
-    "price": 12999,
-    "currency": "INR",
-    "shortDescription": "Network video recorder supporting up to 8 cameras with 2TB storage.",
-    "imageUrl": "https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "CCTV-NVR-001",
-    "stock": 20,
-    "urlSlug": "8-channel-nvr-system"
+    "id": "laptop-microsoft-generic",
+    "name": "Refurbished Microsoft Laptop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Laptop",
+    "shortDescription": "Premium Microsoft Surface devices refurbished to high standards. Key specs available on request.",
+    "imageUrl": "/Refurbishedlaptops/Microsoft Laptop.jpeg",
+    "sku": "MSFT-GEN-001"
   },
   {
-    "id": "laptop-dell-001",
-    "name": "Dell Latitude 7490",
-    "category": "Laptops",
-    "subcategory": "Normal",
-    "price": 32999,
-    "currency": "INR",
-    "shortDescription": "Intel Core i5 8th Gen, 8GB RAM, 256GB SSD. Perfect for business and productivity.",
-    "imageUrl": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "LAPTOP-DELL-001",
-    "stock": 12,
-    "urlSlug": "dell-latitude-7490"
+    "id": "macbook-air-a1466",
+    "name": "Refurbished Apple MacBook Air A1466",
+    "category": "Refurbished Laptops",
+    "subcategory": "Apple Mac Book",
+    "shortDescription": "Sleek and portable MacBook Air with excellent battery life. Fully tested and certified.",
+    "imageUrl": "/Refurbishedlaptops/Apple MacBook Air A1466.jpeg",
+    "sku": "MBA-A1466"
   },
   {
-    "id": "laptop-hp-001",
-    "name": "HP EliteBook 840 G5",
-    "category": "Laptops",
-    "subcategory": "Normal",
-    "price": 35999,
-    "currency": "INR",
-    "shortDescription": "Intel Core i5 8th Gen, 8GB RAM, 256GB SSD. Enterprise-grade reliability.",
-    "imageUrl": "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "LAPTOP-HP-001",
-    "stock": 8,
-    "urlSlug": "hp-elitebook-840-g5"
+    "id": "macbook-pro-a1708",
+    "name": "Refurbished Apple MacBook Pro A1708",
+    "category": "Refurbished Laptops",
+    "subcategory": "Apple Mac Book",
+    "shortDescription": "Powerful MacBook Pro for professional workflows. Key specs available on request.",
+    "imageUrl": "/Refurbishedlaptops/Apple MacBook Pro A1708.jpeg",
+    "sku": "MBP-A1708"
   },
   {
-    "id": "laptop-macbook-001",
-    "name": "MacBook Air 2019",
-    "category": "Laptops",
-    "subcategory": "Apple/Mac",
-    "price": 52999,
-    "currency": "INR",
-    "shortDescription": "Intel Core i5, 8GB RAM, 256GB SSD. Sleek design with excellent battery life.",
-    "imageUrl": "https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "LAPTOP-MAC-001",
-    "stock": 5,
-    "urlSlug": "macbook-air-2019"
+    "id": "macbook-air-a2681",
+    "name": "Refurbished Apple MacBook Air A2681",
+    "category": "Refurbished Laptops",
+    "subcategory": "Apple Mac Book",
+    "shortDescription": "Latest generation MacBook Air with M2 chip. Outstanding performance and efficiency.",
+    "imageUrl": "/Refurbishedlaptops/Apple MacBook Air A2681.jpeg",
+    "sku": "MBA-A2681"
   },
   {
-    "id": "laptop-macbook-002",
-    "name": "MacBook Pro 2018 13\"",
-    "category": "Laptops",
-    "subcategory": "Apple/Mac",
-    "price": 68999,
-    "currency": "INR",
-    "shortDescription": "Intel Core i5, 8GB RAM, 512GB SSD. Touch Bar and premium display.",
-    "imageUrl": "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "LAPTOP-MAC-002",
-    "stock": 3,
-    "urlSlug": "macbook-pro-2018-13"
+    "id": "macbook-air-a2337",
+    "name": "Refurbished Apple MacBook Air A2337",
+    "category": "Refurbished Laptops",
+    "subcategory": "Apple Mac Book",
+    "shortDescription": "M1 MacBook Air with exceptional battery life and silent operation.",
+    "imageUrl": "/Refurbishedlaptops/Apple MacBook Air A2337.jpeg",
+    "sku": "MBA-A2337"
   },
   {
-    "id": "laptop-gaming-001",
-    "name": "Dell G3 Gaming Laptop",
-    "category": "Laptops",
-    "subcategory": "Gaming",
-    "price": 54999,
-    "currency": "INR",
-    "shortDescription": "Intel Core i7 9th Gen, NVIDIA GTX 1650, 16GB RAM, 512GB SSD. Ready for gaming.",
-    "imageUrl": "https://images.unsplash.com/photo-1603481588273-2f908a9a7a1b?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "LAPTOP-GAME-001",
-    "stock": 6,
-    "urlSlug": "dell-g3-gaming-laptop"
+    "id": "macbook-air-a3113",
+    "name": "Refurbished Apple MacBook Air A3113",
+    "category": "Refurbished Laptops",
+    "subcategory": "Apple Mac Book",
+    "shortDescription": "Premium MacBook Air for demanding tasks. Key specs available on request.",
+    "imageUrl": "/Refurbishedlaptops/Apple MacBook Air A3113.jpeg",
+    "sku": "MBA-A3113"
   },
   {
-    "id": "laptop-gaming-002",
-    "name": "HP Pavilion Gaming",
-    "category": "Laptops",
-    "subcategory": "Gaming",
-    "price": 48999,
-    "currency": "INR",
-    "shortDescription": "AMD Ryzen 5, NVIDIA GTX 1650, 8GB RAM, 512GB SSD. Powerful gaming performance.",
-    "imageUrl": "https://images.unsplash.com/photo-1625019030820-e4ed970a6c95?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "LAPTOP-GAME-002",
-    "stock": 7,
-    "urlSlug": "hp-pavilion-gaming"
+    "id": "macbook-pro-a2338",
+    "name": "Refurbished Apple MacBook Pro A2338",
+    "category": "Refurbished Laptops",
+    "subcategory": "Apple Mac Book",
+    "shortDescription": "M1 MacBook Pro 13-inch with Touch Bar. Professional-grade performance.",
+    "imageUrl": "/Refurbishedlaptops/Apple MacBook Pro A2338.jpeg",
+    "sku": "MBP-A2338"
   },
   {
-    "id": "laptop-lenovo-001",
-    "name": "Lenovo ThinkPad T480",
-    "category": "Laptops",
-    "subcategory": "Normal",
-    "price": 34999,
-    "currency": "INR",
-    "shortDescription": "Intel Core i5 8th Gen, 8GB RAM, 256GB SSD. Legendary ThinkPad durability.",
-    "imageUrl": "https://images.unsplash.com/photo-1588702547923-7093a6c3ba33?w=800&h=600&fit=crop&auto=format&q=80",
-    "sku": "LAPTOP-LNVO-001",
-    "stock": 10,
-    "urlSlug": "lenovo-thinkpad-t480"
+    "id": "macbook-pro-a2141",
+    "name": "Refurbished Apple MacBook Pro A2141",
+    "category": "Refurbished Laptops",
+    "subcategory": "Apple Mac Book",
+    "shortDescription": "16-inch MacBook Pro with powerful Intel processor. Ideal for creative professionals.",
+    "imageUrl": "/Refurbishedlaptops/Apple MacBook Pro A2141.jpeg",
+    "sku": "MBP-A2141"
+  },
+  {
+    "id": "thinkpad-p52",
+    "name": "Refurbished Lenovo ThinkPad P52",
+    "category": "Refurbished Laptops",
+    "subcategory": "Gaming Laptop",
+    "shortDescription": "Mobile workstation with dedicated graphics. Perfect for CAD, video editing, and gaming.",
+    "imageUrl": "/Refurbishedlaptops/Lenovo ThinkPad P52.jpeg",
+    "sku": "LNVO-P52"
+  },
+  {
+    "id": "thinkpad-p51s",
+    "name": "Refurbished Lenovo ThinkPad P51S",
+    "category": "Refurbished Laptops",
+    "subcategory": "Gaming Laptop",
+    "shortDescription": "Slim workstation laptop with professional graphics capabilities.",
+    "imageUrl": "/Refurbishedlaptops/Lenovo ThinkPad P51S.jpeg",
+    "sku": "LNVO-P51S"
+  },
+  {
+    "id": "thinkpad-p50",
+    "name": "Refurbished Lenovo ThinkPad P50",
+    "category": "Refurbished Laptops",
+    "subcategory": "Gaming Laptop",
+    "shortDescription": "High-performance mobile workstation for intensive applications.",
+    "imageUrl": "/Refurbishedlaptops/Lenovo ThinkPad P50.jpeg",
+    "sku": "LNVO-P50"
+  },
+  {
+    "id": "hp-zbook-i7",
+    "name": "Refurbished HP Zbook I7",
+    "category": "Refurbished Laptops",
+    "subcategory": "Gaming Laptop",
+    "shortDescription": "Intel Core i7 powered workstation. Professional-grade graphics and processing power.",
+    "imageUrl": "/Refurbishedlaptops/HP Zbook i7.jpeg",
+    "sku": "HP-ZBOOK-I7"
+  },
+  {
+    "id": "hp-zbook-i5",
+    "name": "Refurbished HP Zbook I5",
+    "category": "Refurbished Laptops",
+    "subcategory": "Gaming Laptop",
+    "shortDescription": "Intel Core i5 workstation laptop. Balance of performance and value.",
+    "imageUrl": "/Refurbishedlaptops/HP Zbook i5.jpeg",
+    "sku": "HP-ZBOOK-I5"
+  },
+  {
+    "id": "dell-precision-7520",
+    "name": "Refurbished Dell Precision 7520",
+    "category": "Refurbished Laptops",
+    "subcategory": "Gaming Laptop",
+    "shortDescription": "15-inch mobile workstation with powerful Xeon processors and pro graphics.",
+    "imageUrl": "/Refurbishedlaptops/Dell Precision 7520.jpeg",
+    "sku": "DELL-PREC-7520"
+  },
+  {
+    "id": "lenovo-ideapad-gaming-3",
+    "name": "Refurbished Lenovo IdeaPad Gaming 3",
+    "category": "Refurbished Laptops",
+    "subcategory": "Gaming Laptop",
+    "shortDescription": "Dedicated gaming laptop with modern GPU. Ready for the latest games.",
+    "imageUrl": "/Refurbishedlaptops/Lenovo IdeaPad Gaming 3.jpeg",
+    "sku": "LNVO-GAMING3"
+  },
+  {
+    "id": "dell-servers-refurb",
+    "name": "Dell Refurbished Servers",
+    "category": "Refurbished Laptops",
+    "subcategory": "Servers",
+    "shortDescription": "Enterprise-grade Dell servers refurbished and tested. Ideal for small to medium businesses.",
+    "imageUrl": "/template/server.jpg",
+    "sku": "DELL-SRV-REFURB"
+  },
+  {
+    "id": "hp-servers-refurb",
+    "name": "HP Refurbished Servers",
+    "category": "Refurbished Laptops",
+    "subcategory": "Servers",
+    "shortDescription": "Reliable HP ProLiant servers at affordable prices. Fully tested hardware.",
+    "imageUrl": "/template/server.jpg",
+    "sku": "HP-SRV-REFURB"
+  },
+  {
+    "id": "hp-servers-new",
+    "name": "HP New Servers",
+    "category": "Refurbished Laptops",
+    "subcategory": "Servers",
+    "shortDescription": "Brand new HP servers with full warranty. Latest generation hardware.",
+    "imageUrl": "/template/server.jpg",
+    "sku": "HP-SRV-NEW"
+  },
+  {
+    "id": "dell-servers-new",
+    "name": "Dell New Servers",
+    "category": "Refurbished Laptops",
+    "subcategory": "Servers",
+    "shortDescription": "New Dell PowerEdge servers with manufacturer warranty and support.",
+    "imageUrl": "/template/server.jpg",
+    "sku": "DELL-SRV-NEW"
+  },
+  {
+    "id": "storage-servers",
+    "name": "Storage Servers",
+    "category": "Refurbished Laptops",
+    "subcategory": "Servers",
+    "shortDescription": "High-capacity storage solutions for data centers. Scalable and secure.",
+    "imageUrl": "/template/server.jpg",
+    "sku": "STORAGE-SRV"
+  },
+  {
+    "id": "hp-desktop",
+    "name": "HP Desktop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Desktop",
+    "shortDescription": "Refurbished HP desktop computers for office and home use.",
+    "imageUrl": "/template/desktop.jpg",
+    "sku": "HP-DESK"
+  },
+  {
+    "id": "dell-desktop",
+    "name": "Dell Desktop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Desktop",
+    "shortDescription": "Quality Dell OptiPlex and Precision desktops. Business-ready systems.",
+    "imageUrl": "/template/desktop.jpg",
+    "sku": "DELL-DESK"
+  },
+  {
+    "id": "lenovo-desktop",
+    "name": "Lenovo Desktop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Desktop",
+    "shortDescription": "Lenovo ThinkCentre desktops. Reliable and affordable computing.",
+    "imageUrl": "/template/desktop.jpg",
+    "sku": "LNVO-DESK"
+  },
+  {
+    "id": "gaming-desktop",
+    "name": "Gaming Desktop",
+    "category": "Refurbished Laptops",
+    "subcategory": "Desktop",
+    "shortDescription": "High-performance gaming PCs with dedicated graphics cards.",
+    "imageUrl": "/template/desktop.jpg",
+    "sku": "GAMING-DESK"
+  },
+  {
+    "id": "dell-monitor-refurb",
+    "name": "Refurbished Dell Monitor",
+    "category": "Refurbished Laptops",
+    "subcategory": "Monitors",
+    "shortDescription": "Professional Dell monitors in excellent condition. Various sizes available.",
+    "imageUrl": "/template/monitor.jpg",
+    "sku": "DELL-MON-REFURB"
+  },
+  {
+    "id": "hp-monitor-refurb",
+    "name": "Refurbished HP Monitor",
+    "category": "Refurbished Laptops",
+    "subcategory": "Monitors",
+    "shortDescription": "Quality HP displays at affordable prices. Full HD and higher resolutions.",
+    "imageUrl": "/template/monitor.jpg",
+    "sku": "HP-MON-REFURB"
+  },
+  {
+    "id": "lenovo-monitor-refurb",
+    "name": "Refurbished Lenovo Monitor",
+    "category": "Refurbished Laptops",
+    "subcategory": "Monitors",
+    "shortDescription": "Lenovo ThinkVision monitors. Professional displays for productivity.",
+    "imageUrl": "/template/monitor.jpg",
+    "sku": "LNVO-MON-REFURB"
+  },
+  {
+    "id": "brand-new-monitor",
+    "name": "Brand New Monitor",
+    "category": "Refurbished Laptops",
+    "subcategory": "Monitors",
+    "shortDescription": "Latest generation monitors with full warranty. Multiple brands available.",
+    "imageUrl": "/template/monitor.jpg",
+    "sku": "MON-NEW"
+  },
+  {
+    "id": "lapcare-monitors",
+    "name": "Lapcare Monitors",
+    "category": "Refurbished Laptops",
+    "subcategory": "Monitors",
+    "shortDescription": "Budget-friendly Lapcare monitors. Good value for office and home use.",
+    "imageUrl": "/template/monitor.jpg",
+    "sku": "LAPCARE-MON"
+  },
+  {
+    "id": "olt-gpon-epon",
+    "name": "OLT GPON/EPON",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Optical Line Terminals for fiber network deployments. Enterprise-grade equipment.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "OLT-GPON"
+  },
+  {
+    "id": "ont-single-dual",
+    "name": "ONT Single/Dual Band",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Optical Network Terminals with WiFi. Single and dual-band options available.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "ONT-BAND"
+  },
+  {
+    "id": "wireless-router",
+    "name": "Wireless WiFi Router",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "High-speed wireless routers. Dual-band and tri-band options for all needs.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "WIFI-ROUTER"
+  },
+  {
+    "id": "xpon-ont",
+    "name": "X Pon ONT",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Multi-standard PON terminals. Compatible with GPON, EPON, and XGS-PON.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "XPON-ONT"
+  },
+  {
+    "id": "network-switch",
+    "name": "Switch",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Managed and unmanaged network switches. Various port configurations available.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "NET-SWITCH"
+  },
+  {
+    "id": "sfp-module",
+    "name": "SFP",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "SFP and SFP+ transceivers for fiber connectivity. Multiple wavelengths and distances.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "SFP-MOD"
+  },
+  {
+    "id": "firewall",
+    "name": "Firewall",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Network security firewalls. Hardware and virtual appliances available.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "FIREWALL"
+  },
+  {
+    "id": "access-point",
+    "name": "Access Point",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Professional WiFi access points. Indoor and outdoor models for complete coverage.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "ACCESS-PT"
+  },
+  {
+    "id": "media-converter",
+    "name": "Media Converter",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Fiber to Ethernet media converters. Extend network reach with fiber optics.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "MEDIA-CONV"
+  },
+  {
+    "id": "load-balancer",
+    "name": "Load Balancer",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Network load balancing solutions. Distribute traffic for high availability.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "LOAD-BAL"
+  },
+  {
+    "id": "patch-cords",
+    "name": "Patch Cords",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Ethernet and fiber patch cables. Cat5e, Cat6, Cat6a, and fiber options.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "PATCH-CORD"
+  },
+  {
+    "id": "splicing-machine",
+    "name": "Splicing Machine",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Fiber optic fusion splicers. Professional tools for fiber installations.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "SPLICE-MACH"
+  },
+  {
+    "id": "power-meter",
+    "name": "Power Meter",
+    "category": "Refurbished Laptops",
+    "subcategory": "IT Hardware & Networking Devices",
+    "shortDescription": "Optical power meters for fiber testing. Essential for fiber optic installations.",
+    "imageUrl": "/template/networking.jpg",
+    "sku": "PWR-METER"
+  },
+  {
+    "id": "cctv-surveillance",
+    "name": "CCTV Surveillance",
+    "category": "CCTV Solutions",
+    "subcategory": "Security",
+    "shortDescription": "Comprehensive CCTV systems with IP/HD cameras, DVR/NVR, and remote monitoring. Improves situational awareness and security for commercial and residential properties.",
+    "imageUrl": "/ispcctv/CCTV SURVEILLANCE.jpeg",
+    "features": [
+      "4MP to 8MP IP and HD cameras",
+      "Night vision with IR up to 30m",
+      "Motion detection and alerts",
+      "Remote viewing via mobile app",
+      "DVR/NVR with up to 16 channels"
+    ],
+    "sku": "CCTV-SURV-001"
+  },
+  {
+    "id": "wireless-networking",
+    "name": "Wireless Networking",
+    "category": "ISP Solutions",
+    "subcategory": "Networking",
+    "shortDescription": "Seamless wireless connectivity across your property. Enterprise-grade WiFi with unified management, coverage planning, and high-speed internet access throughout.",
+    "imageUrl": "/ispcctv/WIRELESS NETWORKING.jpeg",
+    "features": [
+      "Dual-band and tri-band access points",
+      "Mesh networking for complete coverage",
+      "Centralized management console",
+      "Bandwidth management and QoS",
+      "Support for 100+ concurrent users"
+    ],
+    "sku": "WIFI-NET-001"
+  },
+  {
+    "id": "access-control",
+    "name": "Access Control",
+    "category": "CCTV Solutions",
+    "subcategory": "Security",
+    "shortDescription": "Advanced access management systems to monitor and control entry points. Biometric, card-based, and PIN access for enhanced security and audit trails.",
+    "imageUrl": "/ispcctv/ACCESS CONTROL.jpeg",
+    "features": [
+      "Fingerprint and face recognition",
+      "RFID card access systems",
+      "Time attendance integration",
+      "Real-time monitoring and alerts",
+      "Multi-door controller support"
+    ],
+    "sku": "ACCESS-CTRL-001"
+  },
+  {
+    "id": "conference-room",
+    "name": "Conference Room Solutions",
+    "category": "ISP Solutions",
+    "subcategory": "AV Solutions",
+    "shortDescription": "Professional audio-video solutions for meetings. Video conferencing systems, wireless presentation, sound systems, and lighting control for modern conference rooms.",
+    "imageUrl": "/ispcctv/CONFERENCE ROOM SOLUTIONS.jpg",
+    "features": [
+      "HD video conferencing codec",
+      "Wireless screen sharing",
+      "Professional audio systems",
+      "Lighting and climate control",
+      "Compatible with Zoom, Teams, WebEx"
+    ],
+    "sku": "CONF-ROOM-001"
+  },
+  {
+    "id": "home-theatre",
+    "name": "Custom Home Theatre",
+    "category": "CCTV Solutions",
+    "subcategory": "Entertainment",
+    "shortDescription": "Premium home cinema experience with professional AV installation. Surround sound systems, projectors, acoustic treatment, and smart control integration.",
+    "imageUrl": "/ispcctv/CUSTOM HOME THEATRE.jpeg",
+    "features": [
+      "4K/8K projectors and screens",
+      "Dolby Atmos sound systems",
+      "Acoustic panel installation",
+      "Smart lighting integration",
+      "Universal remote control"
+    ],
+    "sku": "HOME-THTR-001"
+  },
+  {
+    "id": "proav-solution",
+    "name": "Pro AV Solution",
+    "category": "ISP Solutions",
+    "subcategory": "AV Solutions",
+    "shortDescription": "Professional audiovisual integration for commercial spaces. Digital signage, video walls, sound reinforcement, and presentation systems for businesses and institutions.",
+    "imageUrl": "/ispcctv/PRO AV SOLUTION.jpeg",
+    "features": [
+      "LED video walls and displays",
+      "Digital signage management",
+      "Commercial audio systems",
+      "Interactive displays and kiosks",
+      "Content management platform"
+    ],
+    "sku": "PROAV-001"
+  },
+  {
+    "id": "home-automation",
+    "name": "Home Automation Solution",
+    "category": "CCTV Solutions",
+    "subcategory": "Smart Home",
+    "shortDescription": "Intelligent home automation with integrated control. Smart lighting, climate control, security integration, and voice-activated systems for modern living.",
+    "imageUrl": "/ispcctv/HOME AUTOMATION SOLUTION.jpeg",
+    "features": [
+      "Smart lighting and curtain control",
+      "Climate and HVAC automation",
+      "Voice control integration",
+      "Security system integration",
+      "Mobile app control"
+    ],
+    "sku": "HOME-AUTO-001"
+  },
+  {
+    "id": "epabx-solution",
+    "name": "EPABX Solution",
+    "category": "ISP Solutions",
+    "subcategory": "Communication",
+    "shortDescription": "Modern business phone systems from 8 to 896 users. IP-ready EPABX with VoIP support, call routing, voicemail, and mobile integration for seamless communication.",
+    "imageUrl": "/ispcctv/EPABX SOLUTION.jpeg",
+    "features": [
+      "8 to 896 user capacity",
+      "VoIP and analog line support",
+      "Auto attendant and IVR",
+      "Call recording and reporting",
+      "Mobile app integration"
+    ],
+    "sku": "EPABX-001"
   }
 ]
