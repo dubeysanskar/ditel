@@ -9,10 +9,8 @@ const navigation = [
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
   { name: "Services", href: "#services" },
-  { name: "Vision & Mission", href: "#vision-mission" },
   { name: "Products", href: "#products" },
   { name: "Blog", href: "/blog", isRoute: true },
-  { name: "FAQ", href: "#faq" },
 ];
 
 export function Navbar() {
@@ -60,12 +58,13 @@ export function Navbar() {
           {/* Logo */}
           <button
             onClick={() => handleNavigation({ name: "Home", href: "#home" })}
-            className="flex items-center space-x-2 font-bold text-xl hover:opacity-80 transition-opacity"
+            className="flex items-center hover:opacity-80 transition-opacity"
           >
-            <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white text-sm font-bold">
-              DN
-            </div>
-            <span className="text-foreground">Ditel Network</span>
+            <img 
+              src="/ditellogo.png" 
+              alt="Ditel Network Solutions" 
+              className="h-10 w-auto"
+            />
           </button>
 
           {/* Desktop Navigation */}
@@ -102,13 +101,13 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="md:hidden py-4 border-t animate-fade-in">
+          <div className="md:hidden py-4 border-t animate-fade-in bg-background">
             <div className="flex flex-col space-y-3">
               {navigation.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => handleNavigation(item)}
-                  className="text-muted-foreground hover:text-foreground transition-colors text-sm font-medium py-2 text-left"
+                  className="text-foreground hover:text-primary transition-colors text-sm font-medium py-2 text-left"
                 >
                   {item.name}
                 </button>

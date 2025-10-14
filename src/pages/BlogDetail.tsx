@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Calendar, ArrowLeft, User, Clock, Share2, Tag } from "lucide-react";
 import { Link, useParams, Navigate } from "react-router-dom";
@@ -14,6 +15,10 @@ import { toast } from "sonner";
 const BlogDetail = () => {
   const { id } = useParams();
   const blog = blogs.find((b) => b.id === id);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   const relatedPosts = blogs
     .filter((b) => b.id !== id && b.category === blog?.category)

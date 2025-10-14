@@ -43,11 +43,12 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-primary to-secondary rounded-lg flex items-center justify-center text-white text-sm font-bold">
-                DN
-              </div>
-              <span className="font-bold text-lg">Ditel Network</span>
+            <div className="mb-4">
+              <img 
+                src="/ditellogo.png" 
+                alt="Ditel Network Solutions" 
+                className="h-12 w-auto"
+              />
             </div>
             <p className="text-sm text-muted-foreground mb-4">
               Your trusted partner for quality refurbished laptops, high-speed 

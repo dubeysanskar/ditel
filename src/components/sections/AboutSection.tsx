@@ -12,18 +12,48 @@ export function AboutSection() {
   return (
     <section id="about" className="py-20 md:py-32 bg-background">
       <div className="container mx-auto px-4">
-        <div className="max-w-3xl mx-auto text-center mb-16">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-3xl md:text-4xl lg:text-5xl font-bold mb-12 text-center"
+        >
+          About <span className="text-gradient-primary">Ditel Network Solutions</span>
+        </motion.h2>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+          {/* Image */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
+            className="order-2 lg:order-1"
           >
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
-              About <span className="text-gradient-primary">Ditel Network Solutions</span>
-            </h2>
+            <img 
+              src="/aboutus .png" 
+              alt="About Ditel Network Solutions" 
+              className="w-full rounded-xl shadow-elegant-lg"
+            />
+          </motion.div>
+
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="order-1 lg:order-2"
+          >
+            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+              Established in 2015, Ditel Network Solutions has emerged as a reliable and customer-centric technology company offering affordable and sustainable IT and network solutions. 
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+              We take pride in bridging the gap between performance and affordability by providing top-quality refurbished laptops, high-speed internet services, and advanced surveillance systems.
+            </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Established in 2015, Ditel Network Solutions has emerged as a reliable and customer-centric technology company offering affordable and sustainable IT and network solutions. We bridge the gap between performance and affordability by providing top-quality refurbished laptops, high-speed internet services, and advanced surveillance systems. Our goal is to deliver solutions that combine innovation, service excellence, and long-term reliability.
+              Our focus is on delivering solutions that combine innovation, service excellence, and long-term reliability.
             </p>
           </motion.div>
         </div>

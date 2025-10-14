@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Quote, Star } from "lucide-react";
 import testimonials from "@/data/testimonials.json";
 
@@ -59,21 +58,13 @@ export function TestimonialsSection() {
                 </p>
 
                 {/* Author Info */}
-                <div className="flex items-center gap-3">
-                  <Avatar className="h-12 w-12 border-2 border-primary/10">
-                    <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                    <AvatarFallback className="bg-primary/10 text-primary">
-                      {testimonial.name.split(' ').map(n => n[0]).join('')}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <h4 className="font-semibold">{testimonial.name}</h4>
-                    <p className="text-sm text-muted-foreground">
-                      {testimonial.role}
-                      {testimonial.company && ` • ${testimonial.company}`}
-                    </p>
-                    <p className="text-xs text-muted-foreground">{testimonial.location}</p>
-                  </div>
+                <div>
+                  <h4 className="font-semibold">{testimonial.name}</h4>
+                  <p className="text-sm text-muted-foreground">
+                    {testimonial.role}
+                    {testimonial.company && ` • ${testimonial.company}`}
+                  </p>
+                  <p className="text-xs text-muted-foreground">{testimonial.location}</p>
                 </div>
               </Card>
             </motion.div>

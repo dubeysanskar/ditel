@@ -21,7 +21,7 @@ import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { getWhatsAppNumber, getGeneralEnquiryLink } from "@/lib/whatsapp";
 
 const contactInfo = {
-  email: import.meta.env.VITE_CONTACT_EMAIL || "vijay.massey@ditel.co.in",
+  email: "vijay.massey@ditel.co.in",
   phone: "8447373543",
   phone2: "9289020121",
   address: "520 Saini Plaza, Choma Road, Palam Vihar, Near Prem Motors, Gurugram, Haryana 122017",

@@ -31,9 +31,23 @@ export function VisionMissionSection() {
                 <Target className="h-7 w-7 text-primary" />
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
-              <p className="text-muted-foreground leading-relaxed flex-grow">
+              <p className="text-muted-foreground leading-relaxed mb-4">
                 To empower individuals and organizations through affordable, reliable, and innovative technology solutions that promote connectivity, productivity, and safety.
               </p>
+              <ul className="space-y-2 text-muted-foreground leading-relaxed">
+                <li className="flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>Experience Since 2015 – A decade of expertise in IT and networking.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>Certified Products – Thoroughly tested refurbished laptops from leading brands.</span>
+                </li>
+                <li className="flex items-start">
+                  <span className="text-primary mr-2">•</span>
+                  <span>Customer-First Approach – Dedicated support and quick issue resolution.</span>
+                </li>
+              </ul>
             </Card>
           </motion.div>
 

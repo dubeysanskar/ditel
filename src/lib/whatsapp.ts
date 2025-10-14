@@ -4,7 +4,7 @@
  */
 
 export function getWhatsAppNumber(): string {
-  const number = import.meta.env.VITE_WHATSAPP_NUMBER || "+919876543210";
+  const number = import.meta.env.VITE_WHATSAPP_NUMBER || "+918447373543";
   return number.replace(/\D/g, ""); // Remove all non-digit characters
 }
 
@@ -17,7 +17,7 @@ export function getGeneralEnquiryLink(): string {
   return whatsappLink("Hi! I'd like to know more about your services.");
 }
 
-export function getProductEnquiryLink(productName: string, companyName: string = "TechConnect Solutions"): string {
+export function getProductEnquiryLink(productName: string, companyName: string = "Ditel Network Solutions"): string {
   return whatsappLink(`Hi, I'm interested in ${productName} from ${companyName}. Please contact me.`);
 }
 
