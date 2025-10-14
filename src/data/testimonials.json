@@ -1,0 +1,62 @@
+[
+  {
+    "id": "1",
+    "name": "Rajesh Kumar",
+    "role": "Small Business Owner",
+    "company": "Kumar Enterprises",
+    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
+    "rating": 5,
+    "text": "We switched to Ditel's ISP service 2 years ago and couldn't be happier. Fast, reliable internet with excellent customer support. Highly recommend for businesses!",
+    "location": "Gurugram"
+  },
+  {
+    "id": "2",
+    "name": "Priya Sharma",
+    "role": "IT Manager",
+    "company": "Tech Solutions Pvt Ltd",
+    "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
+    "rating": 5,
+    "text": "Purchased 10 refurbished Dell laptops for our team. Quality is excellent and saved us 60% compared to new ones. Great investment!",
+    "location": "Delhi NCR"
+  },
+  {
+    "id": "3",
+    "name": "Amit Patel",
+    "role": "Security Consultant",
+    "company": "SafeGuard Security",
+    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
+    "rating": 5,
+    "text": "Ditel installed a complete CCTV system at our office. Professional installation, quality cameras, and the monitoring system works flawlessly. Top-notch service!",
+    "location": "Gurugram"
+  },
+  {
+    "id": "4",
+    "name": "Sneha Kapoor",
+    "role": "Freelance Designer",
+    "company": "",
+    "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop",
+    "rating": 5,
+    "text": "Bought a refurbished MacBook Pro from Ditel. It looks and works like new! Warranty coverage and after-sales support is exceptional. Worth every penny.",
+    "location": "Palam Vihar"
+  },
+  {
+    "id": "5",
+    "name": "Vikram Singh",
+    "role": "Restaurant Owner",
+    "company": "Singh's Dhaba",
+    "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop",
+    "rating": 5,
+    "text": "Their ISP service is perfect for our restaurant. Reliable internet for POS systems and customer WiFi. Installation was quick and pricing is very competitive.",
+    "location": "Gurugram"
+  },
+  {
+    "id": "6",
+    "name": "Neha Gupta",
+    "role": "Student",
+    "company": "",
+    "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop",
+    "rating": 5,
+    "text": "Got an HP laptop for my online classes at an amazing price. It works perfectly for all my assignments and video calls. Thank you Ditel for affordable quality!",
+    "location": "Delhi"
+  }
+]
