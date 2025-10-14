@@ -34,6 +34,7 @@ export function ProductsSection() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLaptopSubcategory, setSelectedLaptopSubcategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [showAllProducts, setShowAllProducts] = useState(false);
 
   const filteredProducts = products.filter((product: Product) => {
     if (selectedCategory === "All") return true;
@@ -45,6 +46,9 @@ export function ProductsSection() {
     
     return true;
   });
+
+  const displayProducts = showAllProducts ? filteredProducts : filteredProducts.slice(0, 6);
+  const hasMoreProducts = filteredProducts.length > 6;
 
   return (
     <section id="products" className="py-20 md:py-32 bg-background">
@@ -106,7 +110,7 @@ export function ProductsSection() {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {filteredProducts.map((product: Product, index: number) => (
+          {displayProducts.map((product: Product, index: number) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, scale: 0.9 }}
@@ -184,6 +188,36 @@ export function ProductsSection() {
             <p className="text-muted-foreground">
               No products found in this category.
             </p>
+          </div>
+        )}
+
+        {/* View All Button */}
+        {hasMoreProducts && !showAllProducts && (
+          <div className="text-center mt-8">
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => setShowAllProducts(true)}
+              className="min-w-[200px]"
+            >
+              View All ({filteredProducts.length} products)
+            </Button>
+          </div>
+        )}
+
+        {showAllProducts && hasMoreProducts && (
+          <div className="text-center mt-8">
+            <Button 
+              variant="outline" 
+              size="lg"
+              onClick={() => {
+                setShowAllProducts(false);
+                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="min-w-[200px]"
+            >
+              Show Less
+            </Button>
           </div>
         )}
       </div>

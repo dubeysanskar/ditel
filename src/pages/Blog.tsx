@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Card } from "@/components/ui/card";
-import { Calendar, ArrowRight, Search, Clock } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Calendar, ArrowRight, Search, Clock, Home } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
@@ -9,11 +10,16 @@ import { Helmet } from "react-helmet-async";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import blogs from "@/data/blogs.json";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 const Blog = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const categories = useMemo(() => {
     const cats = ["All", ...Array.from(new Set(blogs.map(blog => blog.category)))];
@@ -52,14 +58,22 @@ const Blog = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="text-center mb-12"
+                className="text-center mb-8"
               >
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
                   Article & <span className="text-gradient-primary">News</span>
                 </h1>
-                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-6">
                   Explore our latest articles, insights, and updates on technology, IT solutions, and industry trends.
                 </p>
+                <Button 
+                  variant="outline" 
+                  onClick={() => navigate('/')}
+                  className="gap-2"
+                >
+                  <Home className="h-4 w-4" />
+                  Back to Home
+                </Button>
               </motion.div>
 
               {/* Search and Filter */}
