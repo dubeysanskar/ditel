@@ -18,7 +18,7 @@ import { Mail, Phone, MapPin, Send } from "lucide-react";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { WhatsAppFloat } from "@/components/WhatsAppFloat";
-import { getWhatsAppNumber, getGeneralEnquiryLink } from "@/lib/whatsapp";
+import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const contactInfo = {
   email: "vijay.massey@ditel.co.in",
@@ -342,7 +342,7 @@ export default function Contact() {
                     <p className="text-sm text-muted-foreground mb-3">
                       Prefer to chat? Connect with us instantly on WhatsApp!
                     </p>
-                    <a href={getGeneralEnquiryLink()} target="_blank" rel="noopener noreferrer">
+                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer">
                       <Button variant="default" className="w-full">
                         Chat on WhatsApp
                       </Button>

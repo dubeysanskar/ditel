@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { getGeneralEnquiryLink } from "@/lib/whatsapp";
 import { useNavigate, useLocation } from "react-router-dom";
 
 const navigation = [

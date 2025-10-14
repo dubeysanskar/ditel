@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { Wifi, Camera, Laptop, ArrowRight, Shield, Gamepad2, Network } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { getServiceEnquiryLink } from "@/lib/whatsapp";
+import { getWhatsAppLink } from "@/lib/whatsapp";
 
 const services = [
   {
@@ -105,7 +105,7 @@ export function ServicesSection() {
 
                 <div className="flex flex-col sm:flex-row gap-3 mt-auto">
                   <a
-                    href={getServiceEnquiryLink(service.title)}
+                    href={getWhatsAppLink()}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full sm:flex-1"

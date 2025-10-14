@@ -11,7 +11,7 @@ import { TrustSignalsSection } from "@/components/sections/TrustSignalsSection";
 import { FAQSection } from "@/components/sections/FAQSection";
 import { BlogSection } from "@/components/sections/BlogSection";
 import { Button } from "@/components/ui/button";
-import { getGeneralEnquiryLink } from "@/lib/whatsapp";
+import { getWhatsAppLink } from "@/lib/whatsapp";
 import { motion } from "framer-motion";
 import { Helmet } from "react-helmet-async";
 import { Mail, Phone, MapPin } from "lucide-react";
@@ -19,12 +19,7 @@ import { Mail, Phone, MapPin } from "lucide-react";
 const Index = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    const message = `Name: ${formData.get('name')}\nEmail: ${formData.get('email')}\nPhone: ${formData.get('phone')}\nMessage: ${formData.get('message')}`;
-    window.open(
-      `https://wa.me/918447373543?text=${encodeURIComponent(message)}`,
-      '_blank'
-    );
+    window.open(getWhatsAppLink(), '_blank');
   };
 
   return (
@@ -251,7 +246,7 @@ const Index = () => {
               >
                 <p className="text-muted-foreground mb-4">Prefer instant messaging?</p>
                 <a
-                  href={getGeneralEnquiryLink()}
+                  href={getWhatsAppLink()}
                   target="_blank"
                   rel="noopener noreferrer"
                 >

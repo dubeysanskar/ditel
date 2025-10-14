@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import products from "@/data/products.json";
-import { getProductEnquiryLink } from "@/lib/whatsapp";
+import { getWhatsAppLink } from "@/lib/whatsapp";
 
 interface Product {
   id: string;
@@ -151,7 +151,7 @@ export function ProductsSection() {
                     </p>
                     
                     <a
-                      href={getProductEnquiryLink(product.name)}
+                      href={getWhatsAppLink()}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block"
@@ -287,7 +287,7 @@ export function ProductsSection() {
                   {/* CTA Button */}
                   <div className="pt-4">
                     <a
-                      href={getProductEnquiryLink(selectedProduct.name)}
+                      href={getWhatsAppLink()}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="block"
