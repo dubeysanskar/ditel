@@ -87,7 +87,47 @@ const Index = () => {
           <BlogSection />
 
           {/* Contact Section - Get in Touch */}
-          <section id="contact" className="py-20 md:py-32 bg-gradient-to-b from-background to-muted/30">
+          <section id="contact" className="py-20 md:py-32 bg-gradient-to-b from-background to-muted/30 relative overflow-hidden">
+            {/* Animated background elements */}
+            <motion.div
+              className="absolute top-20 left-10 w-48 h-48 bg-gradient-to-br from-primary/10 to-transparent rounded-full blur-3xl"
+              animate={{
+                y: [0, 40, 0],
+                x: [0, 20, 0],
+                scale: [1, 1.2, 1],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+            />
+            <motion.div
+              className="absolute bottom-20 right-10 w-56 h-56 bg-gradient-to-br from-secondary/10 to-transparent rounded-full blur-3xl"
+              animate={{
+                y: [0, -50, 0],
+                x: [0, -30, 0],
+                scale: [1, 1.3, 1],
+              }}
+              transition={{
+                duration: 12,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1,
+              }}
+            />
+            <motion.div
+              className="absolute top-1/2 right-1/3 w-40 h-40 bg-gradient-to-br from-accent/10 to-transparent rounded-full blur-3xl"
+              animate={{
+                rotate: [0, 360],
+                scale: [1, 1.1, 1],
+              }}
+              transition={{
+                duration: 20,
+                repeat: Infinity,
+                ease: "linear",
+              }}
+            />
             <div className="container mx-auto px-4">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}

@@ -46,14 +46,14 @@ export function HeroBanner() {
   };
 
   return (
-    <section id="home" className="relative h-screen w-full overflow-hidden">
-      <AnimatePresence mode="wait">
+    <section id="home" className="relative h-screen w-full overflow-hidden bg-black">
+      <AnimatePresence mode="sync">
         <motion.div
           key={currentIndex}
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "-100%" }}
-          transition={{ duration: 0.6, ease: "easeInOut" }}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.95 }}
+          transition={{ duration: 0.8, ease: "easeInOut" }}
           className="absolute inset-0"
         >
           {/* Background Image */}

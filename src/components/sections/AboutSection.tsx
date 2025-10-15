@@ -10,7 +10,44 @@ const stats = [
 
 export function AboutSection() {
   return (
-    <section id="about" className="py-20 md:py-32 bg-background">
+    <section id="about" className="py-20 md:py-32 bg-background relative overflow-hidden">
+      {/* Decorative animated elements */}
+      <motion.div
+        className="absolute top-20 left-10 w-20 h-20 bg-primary/5 rounded-full blur-xl"
+        animate={{
+          y: [0, 30, 0],
+          scale: [1, 1.2, 1],
+        }}
+        transition={{
+          duration: 8,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute bottom-40 right-20 w-32 h-32 bg-secondary/5 rounded-full blur-2xl"
+        animate={{
+          y: [0, -40, 0],
+          scale: [1, 1.3, 1],
+        }}
+        transition={{
+          duration: 10,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute top-1/2 right-10 w-16 h-16 bg-accent/5 rounded-full blur-xl"
+        animate={{
+          x: [0, 20, 0],
+          y: [0, -20, 0],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
