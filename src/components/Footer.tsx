@@ -8,14 +8,12 @@ const companyInfo = {
 };
 
 const quickLinks = [
-  { name: "Article & News", href: "/blog" },
   { name: "Home", href: "#home" },
   { name: "About", href: "#about" },
-  { name: "Our Services", href: "#services" },
-  { name: "Vision & Mission", href: "#vision-mission" },
+  { name: "Services", href: "#services" },
   { name: "Products", href: "#products" },
-  { name: "FAQ", href: "#faq" },
-  { name: "Contact", href: "#contact" },
+  { name: "Blogs", href: "/blog" },
+  { name: "Contact Us", href: "#contact" },
 ];
 
 const services = [
@@ -136,24 +134,10 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-sm text-muted-foreground text-center md:text-left">
+          <div className="flex justify-center items-center">
+            <p className="text-sm text-muted-foreground text-center">
               © {new Date().getFullYear()} Ditel Network Solutions. All rights reserved.
             </p>
-            <div className="flex space-x-6">
-              <a
-                href="#"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href="#"
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Terms of Service
-              </a>
-            </div>
           </div>
         </div>
       </div>
