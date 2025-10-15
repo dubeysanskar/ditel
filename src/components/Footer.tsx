@@ -134,10 +134,25 @@ export function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t pt-8">
-          <div className="flex justify-center items-center">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
             <p className="text-sm text-muted-foreground text-center">
               © {new Date().getFullYear()} Ditel Network Solutions. All rights reserved.
             </p>
+            <div className="flex gap-4">
+              <a 
+                href="/terms" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Terms & Conditions
+              </a>
+              <span className="text-muted-foreground">•</span>
+              <a 
+                href="/privacy" 
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+              >
+                Privacy Policy
+              </a>
+            </div>
           </div>
         </div>
       </div>

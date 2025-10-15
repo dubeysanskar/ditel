@@ -7,6 +7,19 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import products from "@/data/products.json";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
+interface PricingRow {
+  mbps: number;
+  "1_month": number;
+  "3_month": number;
+  "6_month": number;
+  "12_month": number;
+}
+
+interface PricingTable {
+  columns: string[];
+  rows: PricingRow[];
+}
+
 interface Product {
   id: string;
   name: string;
@@ -16,6 +29,7 @@ interface Product {
   imageUrl: string;
   sku: string;
   features?: string[];
+  pricingTable?: PricingTable;
 }
 
 const categories = ["All", "Refurbished Laptops", "ISP Solutions", "CCTV Solutions"];
@@ -273,6 +287,66 @@ export function ProductsSection() {
                           <li key={idx}>• {feature}</li>
                         ))}
                       </ul>
+                    </div>
+                  )}
+
+                  {/* Pricing Table */}
+                  {selectedProduct.pricingTable && (
+                    <div className="space-y-3">
+                      <h4 className="font-semibold text-lg">Pricing Plans</h4>
+                      
+                      {/* Desktop Table View */}
+                      <div className="hidden md:block overflow-x-auto rounded-lg border">
+                        <table className="w-full">
+                          <thead>
+                            <tr className="bg-muted/50">
+                              {selectedProduct.pricingTable.columns.map((col, idx) => (
+                                <th key={idx} className="px-4 py-3 text-left font-semibold text-sm">
+                                  {col}
+                                </th>
+                              ))}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {selectedProduct.pricingTable.rows.map((row, idx) => (
+                              <tr key={idx} className="border-t hover:bg-muted/30 transition-colors">
+                                <td className="px-4 py-3 font-semibold">{row.mbps} Mbps</td>
+                                <td className="px-4 py-3">₹{row["1_month"]}</td>
+                                <td className="px-4 py-3">₹{row["3_month"]}</td>
+                                <td className="px-4 py-3">₹{row["6_month"]}</td>
+                                <td className="px-4 py-3 text-primary font-semibold">₹{row["12_month"]}</td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
+
+                      {/* Mobile Card View */}
+                      <div className="md:hidden space-y-4">
+                        {selectedProduct.pricingTable.rows.map((row, idx) => (
+                          <div key={idx} className="p-4 rounded-lg border bg-card">
+                            <h5 className="font-bold text-lg mb-3">{row.mbps} Mbps</h5>
+                            <div className="grid grid-cols-2 gap-2 text-sm">
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">1 Month:</span>
+                                <span className="font-semibold">₹{row["1_month"]}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">3 Months:</span>
+                                <span className="font-semibold">₹{row["3_month"]}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">6 Months:</span>
+                                <span className="font-semibold">₹{row["6_month"]}</span>
+                              </div>
+                              <div className="flex justify-between">
+                                <span className="text-muted-foreground">12 Months:</span>
+                                <span className="font-semibold text-primary">₹{row["12_month"]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
 

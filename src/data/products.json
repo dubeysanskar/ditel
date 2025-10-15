@@ -540,5 +540,30 @@
       "Mobile app integration"
     ],
     "sku": "EPABX-001"
+  },
+  {
+    "id": "xfiber-tripleplay",
+    "name": "XFiber Broadband — Triple Play (Broadband, Landline, OTT/IPTV)",
+    "category": "ISP Solutions",
+    "subcategory": "Broadband",
+    "shortDescription": "XFiber Triple Play — high-speed broadband, landline and OTT/IPTV packages with flexible subscription durations. Contact us to subscribe or for on-site installation.",
+    "imageUrl": "/ispcctv/XFiber Pricing Updated.jpeg",
+    "features": [
+      "High-speed plans: 100 / 200 / 300 / 400 Mbps",
+      "Triple play: Broadband + Landline + OTT (IPTV)",
+      "Flexible subscription durations with discounted longer terms",
+      "Installation & site survey available on request",
+      "Support & activation via WhatsApp"
+    ],
+    "pricingTable": {
+      "columns": ["Mbps", "1 Month", "3 Month", "6 Month", "12 Month"],
+      "rows": [
+        { "mbps": 100, "1_month": 599, "3_month": 549, "6_month": 499, "12_month": 399 },
+        { "mbps": 200, "1_month": 699, "3_month": 649, "6_month": 599, "12_month": 499 },
+        { "mbps": 300, "1_month": 799, "3_month": 749, "6_month": 649, "12_month": 549 },
+        { "mbps": 400, "1_month": 899, "3_month": 849, "6_month": 699, "12_month": 649 }
+      ]
+    },
+    "sku": "XFIBER-TP-001"
   }
 ]
