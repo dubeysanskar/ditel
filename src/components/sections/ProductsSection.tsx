@@ -41,7 +41,7 @@ interface Product {
 }
 
 /**
- * Fallback broadband products used only when products.json contains no broadband entries.
+ * Fallback broadband products are used only when products.json contains no broadband entries.
  * They are simple plan-cards tied to durations (1m,3m,6m,12m) and expect images in /public.
  */
 const broadbandFallbackPlans: Product[] = [
@@ -49,7 +49,7 @@ const broadbandFallbackPlans: Product[] = [
     id: "xfiber-plan-1month",
     name: "XFiber — 1 Month Plan",
     category: "Broadband Services",
-    subcategory: "Broadband",
+    subcategory: "1 month plan",
     shortDescription: "1 Month subscription — Broadband + Landline + OTT/IPTV. Pay-as-you-go plan.",
     imageUrl: "/1month.jpg",
     sku: "XF-PLAN-1M",
@@ -69,7 +69,7 @@ const broadbandFallbackPlans: Product[] = [
     id: "xfiber-plan-3month",
     name: "XFiber — 3 Months Plan",
     category: "Broadband Services",
-    subcategory: "Broadband",
+    subcategory: "3-month plan",
     shortDescription: "3 Months subscription — Slight discount for quarterly payment.",
     imageUrl: "/3month.jpg",
     sku: "XF-PLAN-3M",
@@ -89,7 +89,7 @@ const broadbandFallbackPlans: Product[] = [
     id: "xfiber-plan-6month",
     name: "XFiber — 6 Months Plan",
     category: "Broadband Services",
-    subcategory: "Broadband",
+    subcategory: "6-month plan",
     shortDescription: "6 Months subscription — better savings, ideal for families.",
     imageUrl: "/6month.jpg",
     sku: "XF-PLAN-6M",
@@ -109,7 +109,7 @@ const broadbandFallbackPlans: Product[] = [
     id: "xfiber-plan-12month",
     name: "XFiber — 12 Months Plan",
     category: "Broadband Services",
-    subcategory: "Broadband",
+    subcategory: "12-month plan",
     shortDescription: "12 Months subscription — best value for continuous service.",
     imageUrl: "/12month.jpg",
     sku: "XF-PLAN-12M",
@@ -122,7 +122,7 @@ const broadbandFallbackPlans: Product[] = [
         { mbps: 200, price: 13999 },
         { mbps: 500, price: 23999 }
       ],
-      durationImages: { "12_month": "/12month.jpg" }
+      durationImages: { "12_month": "/12months.jpg" }
     }
   }
 ];
@@ -131,7 +131,7 @@ const categories = ["All", "Refurbished Laptops", "Internet Service Solutions", 
 const laptopSubcategories = [
   "All",
   "Laptop",
-  "Apple Mac Book",
+  "Apple MacBook",
   "Gaming Laptop",
   "Servers",
   "Desktop",
