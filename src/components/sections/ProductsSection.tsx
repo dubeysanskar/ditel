@@ -43,11 +43,10 @@ interface Product {
 const broadbandFallbackPlans: Product[] = [
   {
     id: "xfiber-plan-1month",
-    name: "XFiber — 1 Month Plan",
+    name: "XFiber — Triple Play",
     category: "Broadband Services",
     subcategory: "1 Month Plan",
-    shortDescription:
-      "1 Month subscription — Broadband + Landline + OTT/IPTV. Pay-as-you-go plan. For more information, click View Details.",
+    shortDescription: "1 Month subscription — Broadband + Landline + OTT/IPTV.",
     imageUrl: "/1month.jpg",
     sku: "XF-PLAN-1M",
     features: ["Broadband + Landline + OTT/IPTV", "No long-term commitment", "24x7 support"],
@@ -64,11 +63,10 @@ const broadbandFallbackPlans: Product[] = [
   },
   {
     id: "xfiber-plan-3month",
-    name: "XFiber — 3 Months Plan",
+    name: "XFiber — Triple Play",
     category: "Broadband Services",
     subcategory: "3 Months Plan",
-    shortDescription:
-      "3 Months subscription — Slight discount for quarterly payment. For more information, click View Details.",
+    shortDescription: "3 Months subscription — Slight discount for quarterly payment.",
     imageUrl: "/3month.jpg",
     sku: "XF-PLAN-3M",
     features: ["Broadband + Landline + OTT/IPTV", "Quarterly billing", "Priority support (optional)"],
@@ -85,11 +83,10 @@ const broadbandFallbackPlans: Product[] = [
   },
   {
     id: "xfiber-plan-6month",
-    name: "XFiber — 6 Months Plan",
+    name: "XFiber — Triple Play",
     category: "Broadband Services",
     subcategory: "6 Months Plan",
-    shortDescription:
-      "6 Months subscription — better savings, ideal for families. For more information, click View Details.",
+    shortDescription: "6 Months subscription — better savings, ideal for families.",
     imageUrl: "/6month.jpg",
     sku: "XF-PLAN-6M",
     features: ["Broadband + Landline + OTT/IPTV", "Half-year billing", "Installation & support included"],
@@ -106,11 +103,10 @@ const broadbandFallbackPlans: Product[] = [
   },
   {
     id: "xfiber-plan-12month",
-    name: "XFiber — 12 Months Plan",
+    name: "XFiber — Triple Play",
     category: "Broadband Services",
     subcategory: "12 Months Plan",
-    shortDescription:
-      "12 Months subscription — best value for continuous service. For more information, click View Details.",
+    shortDescription: "12 Months subscription — best value for continuous service.",
     imageUrl: "/12month.jpg",
     sku: "XF-PLAN-12M",
     features: ["Broadband + Landline + OTT/IPTV", "Annual billing - best price", "Business-grade SLA available"],
@@ -181,10 +177,10 @@ function expandBroadbandToPlans(productsList: Product[]): Product[] {
 
         const derived: Product = {
           id: `${prod.id}-${dur.key}`,
-          name: `${prod.name} — ${dur.label}`,
+          name: prod.name,
           category: "Broadband Services",
           subcategory: `${dur.label} Plan`,
-          shortDescription: `${prod.shortDescription || ""} (${dur.label} plan). For more information, click View Details.`,
+          shortDescription: `${prod.shortDescription || ""} (${dur.label} plan).`,
           imageUrl: img || prod.imageUrl || "/1month.jpg",
           sku: `${prod.sku || prod.id}-${dur.key}`,
           features: prod.features,
@@ -201,7 +197,7 @@ function expandBroadbandToPlans(productsList: Product[]): Product[] {
 }
 
 /**
- * Get badge label. IMPORTANT: check for '12' before '1' to avoid substring matches (bugfix).
+ * Get badge label. Check for '12' before '1' to avoid substring matches.
  */
 function getPlanBadgeLabel(p: Product) {
   if (p.subcategory) {
@@ -218,6 +214,31 @@ function getPlanBadgeLabel(p: Product) {
   if (name.includes("3 month")) return "3 Months Plan";
   if (name.includes("1 month")) return "1 Month Plan";
   return "Plan";
+}
+
+/**
+ * Derive a short duration label that will be shown next to title (1 / 3 / 6 / 12 month).
+ * Prefer explicit durationImages keys, then subcategory, then product id.
+ */
+function getDurationShort(p: Product) {
+  const dt = p.pricingTable?.durationImages;
+  if (dt) {
+    if (dt["12_month"]) return "12 Month";
+    if (dt["6_month"]) return "6 Month";
+    if (dt["3_month"]) return "3 Month";
+    if (dt["1_month"]) return "1 Month";
+  }
+  const s = p.subcategory?.toLowerCase() || "";
+  if (s.includes("12")) return "12 Month";
+  if (s.includes("6")) return "6 Month";
+  if (s.includes("3")) return "3 Month";
+  if (s.includes("1")) return "1 Month";
+  // fallback: check id
+  if (p.id.includes("12")) return "12 Month";
+  if (p.id.includes("6")) return "6 Month";
+  if (p.id.includes("3")) return "3 Month";
+  if (p.id.includes("1")) return "1 Month";
+  return "";
 }
 
 export function ProductsSection() {
@@ -287,9 +308,10 @@ export function ProductsSection() {
                 </div>
 
                 <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="font-semibold text-lg mb-2 line-clamp-2">{product.name}</h3>
+                  <h3 className="font-semibold text-lg mb-1 line-clamp-2">{product.name} <span className="text-sm font-medium text-muted">— {getDurationShort(product)}</span></h3>
+
                   <p className="text-sm text-muted-foreground mb-3 line-clamp-3 flex-1">
-                    {product.shortDescription} <button onClick={() => setSelectedProduct(product)} className="text-primary underline ml-1">View Details</button>
+                    Click on <button onClick={() => setSelectedProduct(product)} className="text-primary underline">View Details</button> for more information.
                   </p>
 
                   <div className="space-y-3 mt-auto">
@@ -328,7 +350,7 @@ export function ProductsSection() {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           {selectedProduct && (
             <>
-              <DialogHeader><DialogTitle className="text-2xl">{selectedProduct.name}</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle className="text-2xl">{selectedProduct.name} — {getDurationShort(selectedProduct)}</DialogTitle></DialogHeader>
               <div className="space-y-6">
                 <div className="relative rounded-lg overflow-hidden bg-muted p-6 flex items-center justify-center">
                   <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="max-h-[320px] md:max-h-[420px] w-auto object-contain" loading="eager" decoding="async" />
@@ -347,7 +369,7 @@ export function ProductsSection() {
 
                   <div>
                     <h4 className="font-semibold mb-2">Description</h4>
-                    <p className="text-muted-foreground leading-relaxed">{selectedProduct.shortDescription} For full specifications and deployment options, contact us via WhatsApp.</p>
+                    <p className="text-muted-foreground leading-relaxed">{selectedProduct.shortDescription} Click on View Details for more info or contact us via WhatsApp.</p>
                   </div>
 
                   {selectedProduct.features && selectedProduct.features.length > 0 && (
@@ -362,16 +384,39 @@ export function ProductsSection() {
                       <h4 className="font-semibold text-lg">Pricing</h4>
                       <div className="hidden md:block overflow-x-auto rounded-lg border">
                         <table className="w-full">
-                          <thead><tr className="bg-muted/50">{selectedProduct.pricingTable.columns.map((col, idx) => <th key={idx} className="px-4 py-3 text-left font-semibold text-sm">{col}</th>)}</tr></thead>
-                          <tbody>{selectedProduct.pricingTable.rows.map((row, idx) => (<tr key={idx} className="border-t hover:bg-muted/30 transition-colors"><td className="px-4 py-3 font-semibold">{row.mbps} Mbps</td><td className="px-4 py-3 text-primary font-semibold">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</td></tr>))}</tbody>
+                          <thead>
+                            <tr className="bg-muted/50">
+                              {selectedProduct.pricingTable.columns.map((col, idx) => <th key={idx} className="px-4 py-3 text-left font-semibold text-sm">{col}</th>)}
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {selectedProduct.pricingTable.rows.map((row, idx) => (
+                              <tr key={idx} className="border-t hover:bg-muted/30 transition-colors">
+                                <td className="px-4 py-3 font-semibold">{row.mbps} Mbps</td>
+                                <td className="px-4 py-3 text-primary font-semibold">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</td>
+                              </tr>
+                            ))}
+                          </tbody>
                         </table>
                       </div>
 
-                      <div className="md:hidden space-y-4">{selectedProduct.pricingTable.rows.map((row, idx) => (<div key={idx} className="p-4 rounded-lg border bg-card"><h5 className="font-bold text-lg mb-3">{row.mbps} Mbps</h5><div className="flex justify-between text-sm"><span className="text-muted-foreground">Price:</span><span className="font-semibold text-primary">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</span></div></div>))}</div>
+                      <div className="md:hidden space-y-4">
+                        {selectedProduct.pricingTable.rows.map((row, idx) => (
+                          <div key={idx} className="p-4 rounded-lg border bg-card">
+                            <h5 className="font-bold text-lg mb-3">{row.mbps} Mbps</h5>
+                            <div className="flex justify-between text-sm">
+                              <span className="text-muted-foreground">Price:</span>
+                              <span className="font-semibold text-primary">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   )}
 
-                  <div className="p-4 rounded-lg bg-muted/50"><p className="text-sm text-muted-foreground">Full specifications, pricing, and availability details are provided upon request. Contact us via WhatsApp for a detailed quotation tailored to your needs.</p></div>
+                  <div className="p-4 rounded-lg bg-muted/50">
+                    <p className="text-sm text-muted-foreground">Full specifications, pricing, and availability details are provided upon request. Contact us via WhatsApp for a detailed quotation tailored to your needs.</p>
+                  </div>
 
                   <div className="pt-4">
                     <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="block">
