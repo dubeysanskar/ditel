@@ -7,6 +7,50 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import products from "@/data/products.json";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
+/* ---------------------------
+   SAMPLE products.json SNIPPET
+   (Add this object to your products.json)
+   ---------------------------
+
+  {
+    "id": "broadband-xfiber",
+    "name": "XFiber Broadband — Triple Play",
+    "category": "Broadband Services",
+    "subcategory": "Broadband",
+    "shortDescription": "XFiber Triple Play — high-speed broadband, landline and OTT/IPTV packages with flexible subscriptions and SLA-backed support.",
+    "imageUrl": "/1month.jpg",
+    "sku": "XF-TRIPLE-001",
+    "features": [
+      "Broadband + Landline + OTT/IPTV",
+      "Static IP on request",
+      "24x7 Technical Support",
+      "Flexible subscription durations"
+    ],
+    "pricingTable": {
+      "columns": ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      "rows": [
+        { "mbps": 50, "1_month": 699, "3_month": 1899, "6_month": 3599, "12_month": 5999 },
+        { "mbps": 100, "1_month": 999, "3_month": 2799, "6_month": 5299, "12_month": 8999 },
+        { "mbps": 200, "1_month": 1499, "3_month": 4199, "6_month": 7999, "12_month": 13999 },
+        { "mbps": 500, "1_month": 2499, "3_month": 6999, "6_month": 12999, "12_month": 23999 }
+      ],
+      "durationImages": {
+        "1_month": "/1month.jpg",
+        "3_month": "/3month.jpg",
+        "6_month": "/6month.jpg",
+        "12_month": "/12month.jpg"
+      }
+    }
+  }
+
+  NOTE: Put the four images in the public/ folder exactly as:
+    public/1month.jpg
+    public/3month.jpg
+    public/6month.jpg
+    public/12month.jpg
+
+*/
+
 interface PricingRow {
   mbps: number;
   "1_month": number;
@@ -56,14 +100,15 @@ export function ProductsSection() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showAllProducts, setShowAllProducts] = useState(false);
 
-  const filteredProducts = products.filter((product: Product) => {
+  // Filter products by category and (for laptops) subcategory
+  const filteredProducts = (products as Product[]).filter((product: Product) => {
     if (selectedCategory === "All") return true;
     if (selectedCategory !== product.category) return false;
-    
+
     if (selectedCategory === "Refurbished Laptops" && selectedLaptopSubcategory !== "All") {
       return product.subcategory === selectedLaptopSubcategory;
     }
-    
+
     return true;
   });
 
@@ -84,7 +129,7 @@ export function ProductsSection() {
             Our <span className="text-gradient-primary">Products</span>
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Quality refurbished laptops, professional ISP solutions, and advanced CCTV surveillance systems. 
+            Quality refurbished laptops, professional ISP solutions, and advanced CCTV surveillance systems.
             Contact us via WhatsApp for detailed quotations and specifications.
           </p>
         </motion.div>
@@ -141,11 +186,13 @@ export function ProductsSection() {
               <Card className="overflow-hidden h-full flex flex-col hover:shadow-elegant-lg transition-all hover-lift">
                 {/* Product Image */}
                 <div className="relative aspect-video bg-muted overflow-hidden">
+                  {/* Improve perceived load time: load first N images eagerly (visible on page) */}
                   <img
                     src={product.imageUrl}
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform hover:scale-110 duration-500"
-                    loading="lazy"
+                    loading={index < 6 ? "eager" : "lazy"}
+                    decoding="async"
                   />
                   <Badge
                     variant="secondary"
@@ -160,7 +207,7 @@ export function ProductsSection() {
                   <h3 className="font-semibold text-lg mb-2 line-clamp-2">
                     {product.name}
                   </h3>
-                  
+
                   <p className="text-sm text-muted-foreground mb-4 line-clamp-3 flex-1">
                     {product.shortDescription}
                   </p>
@@ -169,7 +216,7 @@ export function ProductsSection() {
                     <p className="text-base font-semibold text-primary">
                       Request quotation via WhatsApp
                     </p>
-                    
+
                     <a
                       href={getWhatsAppLink()}
                       target="_blank"
@@ -187,7 +234,7 @@ export function ProductsSection() {
                         WhatsApp
                       </Button>
                     </a>
-                    
+
                     <Button
                       variant="outline"
                       size="sm"
@@ -258,6 +305,8 @@ export function ProductsSection() {
                     src={selectedProduct.imageUrl}
                     alt={selectedProduct.name}
                     className="w-full h-full object-cover"
+                    loading="eager"
+                    decoding="async"
                   />
                 </div>
 
@@ -300,7 +349,7 @@ export function ProductsSection() {
                   {selectedProduct.pricingTable && (
                     <div className="space-y-3">
                       <h4 className="font-semibold text-lg">Pricing Plans</h4>
-                      
+
                       {/* Duration Images */}
                       {selectedProduct.pricingTable.durationImages && (
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
@@ -310,6 +359,7 @@ export function ProductsSection() {
                                 src={selectedProduct.pricingTable.durationImages["1_month"]}
                                 alt="1 Month Plan"
                                 className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                                loading="eager"
                               />
                               <p className="text-sm font-medium mt-2">1 Month</p>
                             </div>
@@ -320,6 +370,7 @@ export function ProductsSection() {
                                 src={selectedProduct.pricingTable.durationImages["3_month"]}
                                 alt="3 Month Plan"
                                 className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                                loading="eager"
                               />
                               <p className="text-sm font-medium mt-2">3 Months</p>
                             </div>
@@ -330,6 +381,7 @@ export function ProductsSection() {
                                 src={selectedProduct.pricingTable.durationImages["6_month"]}
                                 alt="6 Month Plan"
                                 className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                                loading="eager"
                               />
                               <p className="text-sm font-medium mt-2">6 Months</p>
                             </div>
@@ -340,13 +392,14 @@ export function ProductsSection() {
                                 src={selectedProduct.pricingTable.durationImages["12_month"]}
                                 alt="12 Month Plan"
                                 className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                                loading="eager"
                               />
                               <p className="text-sm font-medium mt-2">12 Months</p>
                             </div>
                           )}
                         </div>
                       )}
-                      
+
                       {/* Desktop Table View */}
                       <div className="hidden md:block overflow-x-auto rounded-lg border">
                         <table className="w-full">
@@ -405,7 +458,7 @@ export function ProductsSection() {
                   {/* Specifications Note */}
                   <div className="p-4 rounded-lg bg-muted/50">
                     <p className="text-sm text-muted-foreground">
-                      Full specifications, pricing, and availability details are provided upon request. 
+                      Full specifications, pricing, and availability details are provided upon request.
                       Contact us via WhatsApp for a detailed quotation tailored to your needs.
                     </p>
                   </div>
@@ -439,3 +492,5 @@ export function ProductsSection() {
     </section>
   );
 }
+
+export default ProductsSection;
