@@ -38,7 +38,7 @@ interface Product {
   pricingTable?: PricingTable;
 }
 
-const categories = ["All", "Refurbished Laptops", "Internet Service Solutions", "CCTV Solutions"];
+const categories = ["All", "Refurbished Laptops", "Internet Service Solutions", "CCTV Solutions", "Broadband Services"];
 const laptopSubcategories = [
   "All",
   "Laptop",
