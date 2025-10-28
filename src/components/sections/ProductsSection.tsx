@@ -43,10 +43,11 @@ interface Product {
 const broadbandFallbackPlans: Product[] = [
   {
     id: "xfiber-plan-1month",
-    name: "XFiber — Triple Play",
+    name: "1 month plan XFiber Broadband",
     category: "Broadband Services",
     subcategory: "1 Month Plan",
-    shortDescription: "1 Month subscription — Broadband + Landline + OTT/IPTV.",
+    shortDescription:
+      "1 Month subscription — Broadband + Landline + OTT/IPTV. Click View Details for more information.",
     imageUrl: "/1month.jpg",
     sku: "XF-PLAN-1M",
     features: ["Broadband + Landline + OTT/IPTV", "No long-term commitment", "24x7 support"],
@@ -63,10 +64,11 @@ const broadbandFallbackPlans: Product[] = [
   },
   {
     id: "xfiber-plan-3month",
-    name: "XFiber — Triple Play",
+    name: "3 month plan XFiber Broadband",
     category: "Broadband Services",
     subcategory: "3 Months Plan",
-    shortDescription: "3 Months subscription — Slight discount for quarterly payment.",
+    shortDescription:
+      "3 Months subscription — Slight discount for quarterly payment. Click View Details for more information.",
     imageUrl: "/3month.jpg",
     sku: "XF-PLAN-3M",
     features: ["Broadband + Landline + OTT/IPTV", "Quarterly billing", "Priority support (optional)"],
@@ -83,10 +85,11 @@ const broadbandFallbackPlans: Product[] = [
   },
   {
     id: "xfiber-plan-6month",
-    name: "XFiber — Triple Play",
+    name: "6 month plan XFiber Broadband",
     category: "Broadband Services",
     subcategory: "6 Months Plan",
-    shortDescription: "6 Months subscription — better savings, ideal for families.",
+    shortDescription:
+      "6 Months subscription — better savings, ideal for families. Click View Details for more information.",
     imageUrl: "/6month.jpg",
     sku: "XF-PLAN-6M",
     features: ["Broadband + Landline + OTT/IPTV", "Half-year billing", "Installation & support included"],
@@ -103,10 +106,11 @@ const broadbandFallbackPlans: Product[] = [
   },
   {
     id: "xfiber-plan-12month",
-    name: "XFiber — Triple Play",
+    name: "12 month plan XFiber Broadband",
     category: "Broadband Services",
     subcategory: "12 Months Plan",
-    shortDescription: "12 Months subscription — best value for continuous service.",
+    shortDescription:
+      "12 Months subscription — best value for continuous service. Click View Details for more information.",
     imageUrl: "/12month.jpg",
     sku: "XF-PLAN-12M",
     features: ["Broadband + Landline + OTT/IPTV", "Annual billing - best price", "Business-grade SLA available"],
@@ -148,6 +152,7 @@ function isBroadbandCandidate(p: Product) {
 
 /**
  * Expand aggregated broadband product into per-duration plan cards (1m/3m/6m/12m).
+ * Derived name format: "1 month plan XFiber Broadband" etc.
  */
 function expandBroadbandToPlans(productsList: Product[]): Product[] {
   const expanded: Product[] = [];
@@ -168,6 +173,9 @@ function expandBroadbandToPlans(productsList: Product[]): Product[] {
           ["12_month", "12 Months"]
         ].map(([k, label]) => ({ key: k as keyof PricingTable["durationImages"], label }));
 
+      // derive base brand name (prefer text before '—' or full name)
+      const baseName = (prod.name && prod.name.split("—")[0].trim()) || prod.name || "XFiber Broadband";
+
       for (const dur of durations) {
         const img = dtImages[dur.key];
         const priceRows = prod.pricingTable!.rows
@@ -175,9 +183,14 @@ function expandBroadbandToPlans(productsList: Product[]): Product[] {
           .filter((r) => r.price !== undefined);
         if (priceRows.length === 0) continue;
 
+        const durationLower = dur.label.toLowerCase().replace(" ", " "); // "1 month", "3 months" etc.
+        // normalize singular/plural to match requested format: "1 month plan", "3 month plan", "6 month plan", "12 month plan"
+        const shortNumber = dur.label.split(" ")[0]; // "1", "3", ...
+        const singular = `${shortNumber} month plan`;
+
         const derived: Product = {
           id: `${prod.id}-${dur.key}`,
-          name: prod.name,
+          name: `${singular} ${baseName}`,
           category: "Broadband Services",
           subcategory: `${dur.label} Plan`,
           shortDescription: `${prod.shortDescription || ""} (${dur.label} plan).`,
@@ -218,7 +231,6 @@ function getPlanBadgeLabel(p: Product) {
 
 /**
  * Derive a short duration label that will be shown next to title (1 / 3 / 6 / 12 month).
- * Prefer explicit durationImages keys, then subcategory, then product id.
  */
 function getDurationShort(p: Product) {
   const dt = p.pricingTable?.durationImages;
@@ -233,7 +245,6 @@ function getDurationShort(p: Product) {
   if (s.includes("6")) return "6 Month";
   if (s.includes("3")) return "3 Month";
   if (s.includes("1")) return "1 Month";
-  // fallback: check id
   if (p.id.includes("12")) return "12 Month";
   if (p.id.includes("6")) return "6 Month";
   if (p.id.includes("3")) return "3 Month";
@@ -308,7 +319,7 @@ export function ProductsSection() {
                 </div>
 
                 <div className="p-5 flex-1 flex flex-col">
-                  <h3 className="font-semibold text-lg mb-1 line-clamp-2">{product.name} <span className="text-sm font-medium text-muted">— {getDurationShort(product)}</span></h3>
+                  <h3 className="font-semibold text-lg mb-1 line-clamp-2">{product.name}</h3>
 
                   <p className="text-sm text-muted-foreground mb-3 line-clamp-3 flex-1">
                     Click on <button onClick={() => setSelectedProduct(product)} className="text-primary underline">View Details</button> for more information.
@@ -350,7 +361,7 @@ export function ProductsSection() {
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           {selectedProduct && (
             <>
-              <DialogHeader><DialogTitle className="text-2xl">{selectedProduct.name} — {getDurationShort(selectedProduct)}</DialogTitle></DialogHeader>
+              <DialogHeader><DialogTitle className="text-2xl">{selectedProduct.name}</DialogTitle></DialogHeader>
               <div className="space-y-6">
                 <div className="relative rounded-lg overflow-hidden bg-muted p-6 flex items-center justify-center">
                   <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="max-h-[320px] md:max-h-[420px] w-auto object-contain" loading="eager" decoding="async" />
