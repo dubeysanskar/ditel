@@ -39,17 +39,15 @@ interface Product {
   pricingTable?: PricingTable;
 }
 
-/* ---------------------------
-   Fallback broadband plans (used only if data lacks broadband products)
-   Ensure these images exist in public/: 1month.jpg, 3month.jpg, 6month.jpg, 12month.jpg
-   --------------------------- */
+/* Fallback broadband plans — ensure images exist: /1month.jpg /3month.jpg /6month.jpg /12month.jpg */
 const broadbandFallbackPlans: Product[] = [
   {
     id: "xfiber-plan-1month",
     name: "XFiber — 1 Month Plan",
     category: "Broadband Services",
     subcategory: "1 Month Plan",
-    shortDescription: "1 Month subscription — Broadband + Landline + OTT/IPTV. Pay-as-you-go plan. For more information, click View Details.",
+    shortDescription:
+      "1 Month subscription — Broadband + Landline + OTT/IPTV. Pay-as-you-go plan. For more information, click View Details.",
     imageUrl: "/1month.jpg",
     sku: "XF-PLAN-1M",
     features: ["Broadband + Landline + OTT/IPTV", "No long-term commitment", "24x7 support"],
@@ -69,7 +67,8 @@ const broadbandFallbackPlans: Product[] = [
     name: "XFiber — 3 Months Plan",
     category: "Broadband Services",
     subcategory: "3 Months Plan",
-    shortDescription: "3 Months subscription — Slight discount for quarterly payment. For more information, click View Details.",
+    shortDescription:
+      "3 Months subscription — Slight discount for quarterly payment. For more information, click View Details.",
     imageUrl: "/3month.jpg",
     sku: "XF-PLAN-3M",
     features: ["Broadband + Landline + OTT/IPTV", "Quarterly billing", "Priority support (optional)"],
@@ -89,7 +88,8 @@ const broadbandFallbackPlans: Product[] = [
     name: "XFiber — 6 Months Plan",
     category: "Broadband Services",
     subcategory: "6 Months Plan",
-    shortDescription: "6 Months subscription — better savings, ideal for families. For more information, click View Details.",
+    shortDescription:
+      "6 Months subscription — better savings, ideal for families. For more information, click View Details.",
     imageUrl: "/6month.jpg",
     sku: "XF-PLAN-6M",
     features: ["Broadband + Landline + OTT/IPTV", "Half-year billing", "Installation & support included"],
@@ -109,7 +109,8 @@ const broadbandFallbackPlans: Product[] = [
     name: "XFiber — 12 Months Plan",
     category: "Broadband Services",
     subcategory: "12 Months Plan",
-    shortDescription: "12 Months subscription — best value for continuous service. For more information, click View Details.",
+    shortDescription:
+      "12 Months subscription — best value for continuous service. For more information, click View Details.",
     imageUrl: "/12month.jpg",
     sku: "XF-PLAN-12M",
     features: ["Broadband + Landline + OTT/IPTV", "Annual billing - best price", "Business-grade SLA available"],
@@ -126,7 +127,13 @@ const broadbandFallbackPlans: Product[] = [
   }
 ];
 
-const categories = ["All", "Refurbished Laptops", "Internet Service Solutions", "CCTV Solutions", "Broadband Services"];
+const categories = [
+  "All",
+  "Refurbished Laptops",
+  "Internet Service Solutions",
+  "CCTV Solutions",
+  "Broadband Services"
+];
 const laptopSubcategories = [
   "All",
   "Laptop",
@@ -150,18 +157,26 @@ function expandBroadbandToPlans(productsList: Product[]): Product[] {
   const expanded: Product[] = [];
 
   for (const prod of productsList) {
-    if ((prod.category === "Broadband Services" || isBroadbandCandidate(prod)) && prod.pricingTable && prod.pricingTable.rows && prod.pricingTable.durationImages) {
+    if (
+      (prod.category === "Broadband Services" || isBroadbandCandidate(prod)) &&
+      prod.pricingTable &&
+      prod.pricingTable.rows &&
+      prod.pricingTable.durationImages
+    ) {
       const dtImages = prod.pricingTable.durationImages;
-      const durations: Array<{ key: keyof PricingTable["durationImages"]; label: string }> = [
-        ["1_month", "1 Month"],
-        ["3_month", "3 Months"],
-        ["6_month", "6 Months"],
-        ["12_month", "12 Months"]
-      ].map(([k, label]) => ({ key: k as keyof PricingTable["durationImages"], label }));
+      const durations: Array<{ key: keyof PricingTable["durationImages"]; label: string }> =
+        [
+          ["1_month", "1 Month"],
+          ["3_month", "3 Months"],
+          ["6_month", "6 Months"],
+          ["12_month", "12 Months"]
+        ].map(([k, label]) => ({ key: k as keyof PricingTable["durationImages"], label }));
 
       for (const dur of durations) {
         const img = dtImages[dur.key];
-        const priceRows = prod.pricingTable!.rows.map((r) => ({ mbps: r.mbps, price: (r as any)[dur.key] ?? undefined })).filter(r => r.price !== undefined);
+        const priceRows = prod.pricingTable!.rows
+          .map((r) => ({ mbps: r.mbps, price: (r as any)[dur.key] ?? undefined }))
+          .filter((r) => r.price !== undefined);
         if (priceRows.length === 0) continue;
 
         const derived: Product = {
@@ -173,11 +188,7 @@ function expandBroadbandToPlans(productsList: Product[]): Product[] {
           imageUrl: img || prod.imageUrl || "/1month.jpg",
           sku: `${prod.sku || prod.id}-${dur.key}`,
           features: prod.features,
-          pricingTable: {
-            columns: ["Speed", "Price"],
-            rows: priceRows,
-            durationImages: { [dur.key]: img || prod.imageUrl || "/1month.jpg" }
-          }
+          pricingTable: { columns: ["Speed", "Price"], rows: priceRows, durationImages: { [dur.key]: img || prod.imageUrl || "/1month.jpg" } }
         };
         expanded.push(derived);
       }
@@ -190,24 +201,22 @@ function expandBroadbandToPlans(productsList: Product[]): Product[] {
 }
 
 /**
- * Derive a clean badge label for the card from product data (prefer human-friendly plan labels).
+ * Get badge label. IMPORTANT: check for '12' before '1' to avoid substring matches (bugfix).
  */
 function getPlanBadgeLabel(p: Product) {
-  // Prefer explicit subcategory if it contains 'month' or 'plan'
   if (p.subcategory) {
     const s = p.subcategory.toLowerCase();
-    if (s.includes("1")) return "1 Month Plan";
-    if (s.includes("3")) return "3 Months Plan";
-    if (s.includes("6")) return "6 Months Plan";
     if (s.includes("12")) return "12 Months Plan";
+    if (s.includes("6")) return "6 Months Plan";
+    if (s.includes("3")) return "3 Months Plan";
+    if (s.includes("1")) return "1 Month Plan";
     if (s.includes("month") || s.includes("plan")) return p.subcategory;
   }
-  // fallback: scan name
   const name = p.name.toLowerCase();
-  if (name.includes("1 month")) return "1 Month Plan";
-  if (name.includes("3 month")) return "3 Months Plan";
-  if (name.includes("6 month")) return "6 Months Plan";
   if (name.includes("12 month")) return "12 Months Plan";
+  if (name.includes("6 month")) return "6 Months Plan";
+  if (name.includes("3 month")) return "3 Months Plan";
+  if (name.includes("1 month")) return "1 Month Plan";
   return "Plan";
 }
 
@@ -226,7 +235,7 @@ export function ProductsSection() {
   });
 
   const expandedProducts = expandBroadbandToPlans(normalized);
-  const hasBroadbandInData = expandedProducts.some(p => p.category === "Broadband Services");
+  const hasBroadbandInData = expandedProducts.some((p) => p.category === "Broadband Services");
   const effectiveProducts = hasBroadbandInData ? expandedProducts : [...expandedProducts, ...broadbandFallbackPlans];
 
   // Filter logic
@@ -247,12 +256,9 @@ export function ProductsSection() {
       <div className="container mx-auto px-4">
         <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Our <span className="text-gradient-primary">Products</span></h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Quality refurbished laptops, professional ISP solutions, and advanced CCTV surveillance systems. Contact us via WhatsApp for detailed quotations and specifications.
-          </p>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">Quality refurbished laptops, professional ISP solutions, and advanced CCTV surveillance systems. Contact us via WhatsApp for detailed quotations and specifications.</p>
         </motion.div>
 
-        {/* Category Filters */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
           {categories.map((category) => (
             <Button key={category} variant={selectedCategory === category ? "default" : "outline"} onClick={() => { setSelectedCategory(category); if (category !== "Refurbished Laptops") setSelectedLaptopSubcategory("All"); }} className="rounded-full">
@@ -261,7 +267,6 @@ export function ProductsSection() {
           ))}
         </div>
 
-        {/* Laptop Subcategory Filters */}
         {selectedCategory === "Refurbished Laptops" && (
           <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="flex flex-wrap justify-center gap-2 mb-8">
             {laptopSubcategories.map((subcategory) => (
@@ -272,26 +277,19 @@ export function ProductsSection() {
           </motion.div>
         )}
 
-        {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {displayProducts.map((product: Product, index: number) => (
             <motion.div key={product.id} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: 0.35, delay: index * 0.04 }}>
               <Card className="overflow-hidden h-full flex flex-col hover:shadow-elegant-lg transition-all hover-lift rounded-lg">
-                {/* IMAGE: use padding + object-contain to avoid cropping */}
                 <div className="relative bg-muted rounded-t-lg p-4 flex items-center justify-center min-h-[160px] md:min-h-[200px]">
                   <img src={product.imageUrl} alt={product.name} className="max-h-full w-auto object-contain" loading={index < 6 ? "eager" : "lazy"} decoding="async" />
-                  <Badge variant="secondary" className="absolute top-3 left-3 bg-white/90 text-foreground text-xs border">
-                    {getPlanBadgeLabel(product)}
-                  </Badge>
+                  <Badge variant="secondary" className="absolute top-3 left-3 bg-white/90 text-foreground text-xs border">{getPlanBadgeLabel(product)}</Badge>
                 </div>
 
-                {/* Product Info */}
                 <div className="p-5 flex-1 flex flex-col">
                   <h3 className="font-semibold text-lg mb-2 line-clamp-2">{product.name}</h3>
-
                   <p className="text-sm text-muted-foreground mb-3 line-clamp-3 flex-1">
-                    {product.shortDescription}{" "}
-                    <button onClick={() => setSelectedProduct(product)} className="text-primary underline ml-1">View Details</button>
+                    {product.shortDescription} <button onClick={() => setSelectedProduct(product)} className="text-primary underline ml-1">View Details</button>
                   </p>
 
                   <div className="space-y-3 mt-auto">
@@ -299,16 +297,12 @@ export function ProductsSection() {
 
                     <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="block">
                       <Button variant="default" size="sm" className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white">
-                        <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                        </svg>
+                        <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                         WhatsApp
                       </Button>
                     </a>
 
-                    <Button variant="outline" size="sm" className="w-full" onClick={() => setSelectedProduct(product)}>
-                      View Details
-                    </Button>
+                    <Button variant="outline" size="sm" className="w-full" onClick={() => setSelectedProduct(product)}>View Details</Button>
                   </div>
                 </div>
               </Card>
@@ -317,41 +311,29 @@ export function ProductsSection() {
         </div>
 
         {filteredProducts.length === 0 && (
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">No products found in this category.</p>
-          </div>
+          <div className="text-center py-12"><p className="text-muted-foreground">No products found in this category.</p></div>
         )}
 
-        {/* View All Button */}
         {hasMoreProducts && !showAllProducts && (
-          <div className="text-center mt-8">
-            <Button variant="outline" size="lg" onClick={() => setShowAllProducts(true)} className="min-w-[200px]">View All ({filteredProducts.length} products)</Button>
-          </div>
+          <div className="text-center mt-8"><Button variant="outline" size="lg" onClick={() => setShowAllProducts(true)} className="min-w-[200px]">View All ({filteredProducts.length} products)</Button></div>
         )}
 
         {showAllProducts && hasMoreProducts && (
-          <div className="text-center mt-8">
-            <Button variant="outline" size="lg" onClick={() => { setShowAllProducts(false); document.getElementById("products")?.scrollIntoView({ behavior: "smooth" }); }} className="min-w-[200px]">Show Less</Button>
-          </div>
+          <div className="text-center mt-8"><Button variant="outline" size="lg" onClick={() => { setShowAllProducts(false); document.getElementById("products")?.scrollIntoView({ behavior: "smooth" }); }} className="min-w-[200px]">Show Less</Button></div>
         )}
       </div>
 
-      {/* Product Detail Modal */}
+      {/* Modal */}
       <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           {selectedProduct && (
             <>
-              <DialogHeader>
-                <DialogTitle className="text-2xl">{selectedProduct.name}</DialogTitle>
-              </DialogHeader>
-
+              <DialogHeader><DialogTitle className="text-2xl">{selectedProduct.name}</DialogTitle></DialogHeader>
               <div className="space-y-6">
-                {/* Modal image: padded + object-contain so full image is visible */}
                 <div className="relative rounded-lg overflow-hidden bg-muted p-6 flex items-center justify-center">
                   <img src={selectedProduct.imageUrl} alt={selectedProduct.name} className="max-h-[320px] md:max-h-[420px] w-auto object-contain" loading="eager" decoding="async" />
                 </div>
 
-                {/* Product Info */}
                 <div className="space-y-4">
                   <div className="flex items-center gap-2">
                     <Badge variant="secondary">{selectedProduct.category}</Badge>
@@ -365,69 +347,36 @@ export function ProductsSection() {
 
                   <div>
                     <h4 className="font-semibold mb-2">Description</h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {selectedProduct.shortDescription} For full specifications and deployment options, click View Details or contact us via WhatsApp.
-                    </p>
+                    <p className="text-muted-foreground leading-relaxed">{selectedProduct.shortDescription} For full specifications and deployment options, contact us via WhatsApp.</p>
                   </div>
 
-                  {/* Features */}
                   {selectedProduct.features && selectedProduct.features.length > 0 && (
                     <div className="space-y-3 p-4 rounded-lg bg-muted/50">
                       <h4 className="font-semibold text-sm mb-2">Key Features</h4>
-                      <ul className="text-sm text-muted-foreground space-y-2">
-                        {selectedProduct.features.map((feature, idx) => <li key={idx}>• {feature}</li>)}
-                      </ul>
+                      <ul className="text-sm text-muted-foreground space-y-2">{selectedProduct.features.map((f, i) => <li key={i}>• {f}</li>)}</ul>
                     </div>
                   )}
 
-                  {/* Pricing */}
                   {selectedProduct.pricingTable && (
                     <div className="space-y-3">
                       <h4 className="font-semibold text-lg">Pricing</h4>
-
                       <div className="hidden md:block overflow-x-auto rounded-lg border">
                         <table className="w-full">
-                          <thead>
-                            <tr className="bg-muted/50">
-                              {selectedProduct.pricingTable.columns.map((col, idx) => <th key={idx} className="px-4 py-3 text-left font-semibold text-sm">{col}</th>)}
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {selectedProduct.pricingTable.rows.map((row, idx) => (
-                              <tr key={idx} className="border-t hover:bg-muted/30 transition-colors">
-                                <td className="px-4 py-3 font-semibold">{row.mbps} Mbps</td>
-                                <td className="px-4 py-3 text-primary font-semibold">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</td>
-                              </tr>
-                            ))}
-                          </tbody>
+                          <thead><tr className="bg-muted/50">{selectedProduct.pricingTable.columns.map((col, idx) => <th key={idx} className="px-4 py-3 text-left font-semibold text-sm">{col}</th>)}</tr></thead>
+                          <tbody>{selectedProduct.pricingTable.rows.map((row, idx) => (<tr key={idx} className="border-t hover:bg-muted/30 transition-colors"><td className="px-4 py-3 font-semibold">{row.mbps} Mbps</td><td className="px-4 py-3 text-primary font-semibold">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</td></tr>))}</tbody>
                         </table>
                       </div>
 
-                      {/* Mobile */}
-                      <div className="md:hidden space-y-4">
-                        {selectedProduct.pricingTable.rows.map((row, idx) => (
-                          <div key={idx} className="p-4 rounded-lg border bg-card">
-                            <h5 className="font-bold text-lg mb-3">{row.mbps} Mbps</h5>
-                            <div className="flex justify-between text-sm">
-                              <span className="text-muted-foreground">Price:</span>
-                              <span className="font-semibold text-primary">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                      <div className="md:hidden space-y-4">{selectedProduct.pricingTable.rows.map((row, idx) => (<div key={idx} className="p-4 rounded-lg border bg-card"><h5 className="font-bold text-lg mb-3">{row.mbps} Mbps</h5><div className="flex justify-between text-sm"><span className="text-muted-foreground">Price:</span><span className="font-semibold text-primary">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</span></div></div>))}</div>
                     </div>
                   )}
 
-                  <div className="p-4 rounded-lg bg-muted/50">
-                    <p className="text-sm text-muted-foreground">Full specifications, pricing, and availability details are provided upon request. Contact us via WhatsApp for a detailed quotation tailored to your needs.</p>
-                  </div>
+                  <div className="p-4 rounded-lg bg-muted/50"><p className="text-sm text-muted-foreground">Full specifications, pricing, and availability details are provided upon request. Contact us via WhatsApp for a detailed quotation tailored to your needs.</p></div>
 
                   <div className="pt-4">
                     <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="block">
                       <Button variant="default" size="lg" className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white">
-                        <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
-                        </svg>
+                        <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                         Get Quotation via WhatsApp
                       </Button>
                     </a>
