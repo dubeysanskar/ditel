@@ -7,50 +7,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import products from "@/data/products.json";
 import { getWhatsAppLink } from "@/lib/whatsapp";
 
-/* ---------------------------
-   SAMPLE products.json SNIPPET
-   (Add this object to your products.json)
-   ---------------------------
-
-  {
-    "id": "broadband-xfiber",
-    "name": "XFiber Broadband — Triple Play",
-    "category": "Broadband Services",
-    "subcategory": "Broadband",
-    "shortDescription": "XFiber Triple Play — high-speed broadband, landline and OTT/IPTV packages with flexible subscriptions and SLA-backed support.",
-    "imageUrl": "/1month.jpg",
-    "sku": "XF-TRIPLE-001",
-    "features": [
-      "Broadband + Landline + OTT/IPTV",
-      "Static IP on request",
-      "24x7 Technical Support",
-      "Flexible subscription durations"
-    ],
-    "pricingTable": {
-      "columns": ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
-      "rows": [
-        { "mbps": 50, "1_month": 699, "3_month": 1899, "6_month": 3599, "12_month": 5999 },
-        { "mbps": 100, "1_month": 999, "3_month": 2799, "6_month": 5299, "12_month": 8999 },
-        { "mbps": 200, "1_month": 1499, "3_month": 4199, "6_month": 7999, "12_month": 13999 },
-        { "mbps": 500, "1_month": 2499, "3_month": 6999, "6_month": 12999, "12_month": 23999 }
-      ],
-      "durationImages": {
-        "1_month": "/1month.jpg",
-        "3_month": "/3month.jpg",
-        "6_month": "/6month.jpg",
-        "12_month": "/12month.jpg"
-      }
-    }
-  }
-
-  NOTE: Put the four images in the public/ folder exactly as:
-    public/1month.jpg
-    public/3month.jpg
-    public/6month.jpg
-    public/12month.jpg
-
-*/
-
 interface PricingRow {
   mbps: number;
   "1_month": number;
@@ -82,6 +38,82 @@ interface Product {
   pricingTable?: PricingTable;
 }
 
+/**
+ * Default Broadband products (fallback) — used only when no Broadband Services products exist
+ * in the loaded products.json. These reference images expected in /public:
+ *   /1month.jpg, /3month.jpg, /6month.jpg, /12month.jpg
+ */
+const broadbandDefaults: Product[] = [
+  {
+    id: "xfiber-basic",
+    name: "XFiber Basic — Triple Play",
+    category: "Broadband Services",
+    subcategory: "Broadband",
+    shortDescription: "50 Mbps Triple Play: broadband + landline + OTT/IPTV. Ideal for small homes.",
+    imageUrl: "/1month.jpg",
+    sku: "XF-BASIC-001",
+    features: ["Broadband + Landline + OTT/IPTV", "SLA-backed support", "Flexible subscription"],
+    pricingTable: {
+      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      rows: [
+        { mbps: 50, "1_month": 699, "3_month": 1899, "6_month": 3599, "12_month": 5999 }
+      ],
+      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+    }
+  },
+  {
+    id: "xfiber-plus",
+    name: "XFiber Plus — Triple Play",
+    category: "Broadband Services",
+    subcategory: "Broadband",
+    shortDescription: "100 Mbps Triple Play with better bandwidth for streaming and gaming households.",
+    imageUrl: "/3month.jpg",
+    sku: "XF-PLUS-002",
+    features: ["Broadband + Landline + OTT/IPTV", "Static IP on request", "Priority support options"],
+    pricingTable: {
+      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      rows: [
+        { mbps: 100, "1_month": 999, "3_month": 2799, "6_month": 5299, "12_month": 8999 }
+      ],
+      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+    }
+  },
+  {
+    id: "xfiber-pro",
+    name: "XFiber Pro — Triple Play",
+    category: "Broadband Services",
+    subcategory: "Broadband",
+    shortDescription: "200 Mbps Triple Play — for small offices and heavy streamers.",
+    imageUrl: "/6month.jpg",
+    sku: "XF-PRO-003",
+    features: ["High throughput", "Optional static IP", "SLA with faster MTTR"],
+    pricingTable: {
+      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      rows: [
+        { mbps: 200, "1_month": 1499, "3_month": 4199, "6_month": 7999, "12_month": 13999 }
+      ],
+      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+    }
+  },
+  {
+    id: "xfiber-ultra",
+    name: "XFiber Ultra — Triple Play",
+    category: "Broadband Services",
+    subcategory: "Broadband",
+    shortDescription: "500 Mbps Triple Play for premium homes and small enterprises.",
+    imageUrl: "/12month.jpg",
+    sku: "XF-ULT-004",
+    features: ["Ultra high-speed", "Business-grade SLA", "Managed OTT/IPTV options"],
+    pricingTable: {
+      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      rows: [
+        { mbps: 500, "1_month": 2499, "3_month": 6999, "6_month": 12999, "12_month": 23999 }
+      ],
+      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+    }
+  }
+];
+
 const categories = ["All", "Refurbished Laptops", "Internet Service Solutions", "CCTV Solutions", "Broadband Services"];
 const laptopSubcategories = [
   "All",
@@ -100,8 +132,22 @@ export function ProductsSection() {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showAllProducts, setShowAllProducts] = useState(false);
 
+  /**
+   * Normalize categories:
+   * - If a product is still under "Internet Service Solutions" but is clearly broadband/triple-play related,
+   *   treat it as "Broadband Services" (prevents it from showing under Internet Service Solutions).
+   */
+  const normalizedProducts: Product[] = (products as Product[]).map((p) => {
+    const combined = `${p.name || ""} ${p.subcategory || ""} ${p.category || ""}`.toLowerCase();
+    const broadbandKeywords = /(broadband|xfiber|triple play|triple-play|ott|iptv|landline)/i;
+    if (p.category === "Internet Service Solutions" && broadbandKeywords.test(combined)) {
+      return { ...p, category: "Broadband Services" };
+    }
+    return p;
+  });
+
   // Filter products by category and (for laptops) subcategory
-  const filteredProducts = (products as Product[]).filter((product: Product) => {
+  let filteredProducts = normalizedProducts.filter((product: Product) => {
     if (selectedCategory === "All") return true;
     if (selectedCategory !== product.category) return false;
 
@@ -111,6 +157,16 @@ export function ProductsSection() {
 
     return true;
   });
+
+  /**
+   * If user selected Broadband Services but there are no broadband items in products.json,
+   * use the built-in defaults (so the Broadband Services section will always display four cards).
+   * This avoids forcing you to edit products.json immediately and ensures the UI matches expectations.
+   */
+  const isBroadbandSelected = selectedCategory === "Broadband Services";
+  if (isBroadbandSelected && filteredProducts.filter(p => p.category === "Broadband Services").length === 0) {
+    filteredProducts = broadbandDefaults;
+  }
 
   const displayProducts = showAllProducts ? filteredProducts : filteredProducts.slice(0, 6);
   const hasMoreProducts = filteredProducts.length > 6;
@@ -223,12 +279,12 @@ export function ProductsSection() {
                       rel="noopener noreferrer"
                       className="block"
                     >
-                      <Button 
-                        variant="default" 
-                        size="sm" 
+                      <Button
+                        variant="default"
+                        size="sm"
                         className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white"
                       >
-                        <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="mr-2 h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
                           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                         </svg>
                         WhatsApp
@@ -261,8 +317,8 @@ export function ProductsSection() {
         {/* View All Button */}
         {hasMoreProducts && !showAllProducts && (
           <div className="text-center mt-8">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               onClick={() => setShowAllProducts(true)}
               className="min-w-[200px]"
@@ -274,8 +330,8 @@ export function ProductsSection() {
 
         {showAllProducts && hasMoreProducts && (
           <div className="text-center mt-8">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               onClick={() => {
                 setShowAllProducts(false);
@@ -471,12 +527,12 @@ export function ProductsSection() {
                       rel="noopener noreferrer"
                       className="block"
                     >
-                      <Button 
-                        variant="default" 
-                        size="lg" 
+                      <Button
+                        variant="default"
+                        size="lg"
                         className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white"
                       >
-                        <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
+                        <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
                           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                         </svg>
                         Get Quotation via WhatsApp
