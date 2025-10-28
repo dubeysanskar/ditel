@@ -9,10 +9,12 @@ import { getWhatsAppLink } from "@/lib/whatsapp";
 
 interface PricingRow {
   mbps: number;
-  "1_month": number;
-  "3_month": number;
-  "6_month": number;
-  "12_month": number;
+  "1_month"?: number;
+  "3_month"?: number;
+  "6_month"?: number;
+  "12_month"?: number;
+  // derived single-price rows for plan-cards will use `price` field
+  price?: number;
 }
 
 interface PricingTable {
@@ -39,77 +41,88 @@ interface Product {
 }
 
 /**
- * Default Broadband products (fallback) — used only when no Broadband Services products exist
- * in the loaded products.json. These reference images expected in /public:
- *   /1month.jpg, /3month.jpg, /6month.jpg, /12month.jpg
+ * Fallback broadband products used only when products.json contains no broadband entries.
+ * They are simple plan-cards tied to durations (1m,3m,6m,12m) and expect images in /public.
  */
-const broadbandDefaults: Product[] = [
+const broadbandFallbackPlans: Product[] = [
   {
-    id: "xfiber-basic",
-    name: "XFiber Basic — Triple Play",
+    id: "xfiber-plan-1month",
+    name: "XFiber — 1 Month Plan",
     category: "Broadband Services",
     subcategory: "Broadband",
-    shortDescription: "50 Mbps Triple Play: broadband + landline + OTT/IPTV. Ideal for small homes.",
+    shortDescription: "1 Month subscription — Broadband + Landline + OTT/IPTV. Pay-as-you-go plan.",
     imageUrl: "/1month.jpg",
-    sku: "XF-BASIC-001",
-    features: ["Broadband + Landline + OTT/IPTV", "SLA-backed support", "Flexible subscription"],
+    sku: "XF-PLAN-1M",
+    features: ["Broadband + Landline + OTT/IPTV", "No long-term commitment", "24x7 support"],
     pricingTable: {
-      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      columns: ["Speed", "Price"],
       rows: [
-        { mbps: 50, "1_month": 699, "3_month": 1899, "6_month": 3599, "12_month": 5999 }
+        { mbps: 50, price: 699 },
+        { mbps: 100, price: 999 },
+        { mbps: 200, price: 1499 },
+        { mbps: 500, price: 2499 }
       ],
-      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+      durationImages: { "1_month": "/1month.jpg" }
     }
   },
   {
-    id: "xfiber-plus",
-    name: "XFiber Plus — Triple Play",
+    id: "xfiber-plan-3month",
+    name: "XFiber — 3 Months Plan",
     category: "Broadband Services",
     subcategory: "Broadband",
-    shortDescription: "100 Mbps Triple Play with better bandwidth for streaming and gaming households.",
+    shortDescription: "3 Months subscription — Slight discount for quarterly payment.",
     imageUrl: "/3month.jpg",
-    sku: "XF-PLUS-002",
-    features: ["Broadband + Landline + OTT/IPTV", "Static IP on request", "Priority support options"],
+    sku: "XF-PLAN-3M",
+    features: ["Broadband + Landline + OTT/IPTV", "Quarterly billing", "Priority support (optional)"],
     pricingTable: {
-      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      columns: ["Speed", "Price"],
       rows: [
-        { mbps: 100, "1_month": 999, "3_month": 2799, "6_month": 5299, "12_month": 8999 }
+        { mbps: 50, price: 1899 },
+        { mbps: 100, price: 2799 },
+        { mbps: 200, price: 4199 },
+        { mbps: 500, price: 6999 }
       ],
-      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+      durationImages: { "3_month": "/3month.jpg" }
     }
   },
   {
-    id: "xfiber-pro",
-    name: "XFiber Pro — Triple Play",
+    id: "xfiber-plan-6month",
+    name: "XFiber — 6 Months Plan",
     category: "Broadband Services",
     subcategory: "Broadband",
-    shortDescription: "200 Mbps Triple Play — for small offices and heavy streamers.",
+    shortDescription: "6 Months subscription — better savings, ideal for families.",
     imageUrl: "/6month.jpg",
-    sku: "XF-PRO-003",
-    features: ["High throughput", "Optional static IP", "SLA with faster MTTR"],
+    sku: "XF-PLAN-6M",
+    features: ["Broadband + Landline + OTT/IPTV", "Half-year billing", "Installation & support included"],
     pricingTable: {
-      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      columns: ["Speed", "Price"],
       rows: [
-        { mbps: 200, "1_month": 1499, "3_month": 4199, "6_month": 7999, "12_month": 13999 }
+        { mbps: 50, price: 3599 },
+        { mbps: 100, price: 5299 },
+        { mbps: 200, price: 7999 },
+        { mbps: 500, price: 12999 }
       ],
-      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+      durationImages: { "6_month": "/6month.jpg" }
     }
   },
   {
-    id: "xfiber-ultra",
-    name: "XFiber Ultra — Triple Play",
+    id: "xfiber-plan-12month",
+    name: "XFiber — 12 Months Plan",
     category: "Broadband Services",
     subcategory: "Broadband",
-    shortDescription: "500 Mbps Triple Play for premium homes and small enterprises.",
+    shortDescription: "12 Months subscription — best value for continuous service.",
     imageUrl: "/12month.jpg",
-    sku: "XF-ULT-004",
-    features: ["Ultra high-speed", "Business-grade SLA", "Managed OTT/IPTV options"],
+    sku: "XF-PLAN-12M",
+    features: ["Broadband + Landline + OTT/IPTV", "Annual billing - best price", "Business-grade SLA available"],
     pricingTable: {
-      columns: ["Speed", "1 Month", "3 Months", "6 Months", "12 Months"],
+      columns: ["Speed", "Price"],
       rows: [
-        { mbps: 500, "1_month": 2499, "3_month": 6999, "6_month": 12999, "12_month": 23999 }
+        { mbps: 50, price: 5999 },
+        { mbps: 100, price: 8999 },
+        { mbps: 200, price: 13999 },
+        { mbps: 500, price: 23999 }
       ],
-      durationImages: { "1_month": "/1month.jpg", "3_month": "/3month.jpg", "6_month": "/6month.jpg", "12_month": "/12month.jpg" }
+      durationImages: { "12_month": "/12month.jpg" }
     }
   }
 ];
@@ -126,47 +139,99 @@ const laptopSubcategories = [
   "IT Hardware & Networking Devices"
 ];
 
+function isBroadbandCandidate(p: Product) {
+  const combined = `${p.name || ""} ${p.subcategory || ""} ${p.category || ""}`.toLowerCase();
+  return /(broadband|xfiber|triple play|triple-play|ott|iptv|landline)/i.test(combined);
+}
+
+/**
+ * Expand any aggregated broadband product into four plan-cards (1m,3m,6m,12m).
+ * Each derived product uses the duration image (if present), derives SKU and name,
+ * and creates a pricingTable with single-price column for that duration.
+ */
+function expandBroadbandToPlans(productsList: Product[]): Product[] {
+  const expanded: Product[] = [];
+
+  for (const prod of productsList) {
+    // If product is broadband (either category already Broadband Services OR candidate keywords) AND has pricingTable with rows & durationImages,
+    // expand to per-duration plan cards.
+    if ((prod.category === "Broadband Services" || isBroadbandCandidate(prod)) && prod.pricingTable && prod.pricingTable.rows && prod.pricingTable.durationImages) {
+      const dtImages = prod.pricingTable.durationImages;
+      const durations: Array<{ key: keyof PricingTable["durationImages"]; label: string }> = [
+        ["1_month", "1 Month"],
+        ["3_month", "3 Months"],
+        ["6_month", "6 Months"],
+        ["12_month", "12 Months"]
+      ].map(([k, label]) => ({ key: k as keyof PricingTable["durationImages"], label }));
+
+      for (const dur of durations) {
+        const img = dtImages[dur.key];
+        // produce rows where each row is { mbps, price: row[dur.key] }
+        const priceRows = prod.pricingTable!.rows.map((r) => {
+          return { mbps: r.mbps, price: (r as any)[dur.key] ?? undefined };
+        }).filter(r => r.price !== undefined); // drop speeds without price for that duration
+
+        // if no price rows for this duration, skip creating this plan
+        if (priceRows.length === 0) continue;
+
+        const derived: Product = {
+          id: `${prod.id}-${dur.key}`,
+          name: `${prod.name} — ${dur.label}`,
+          category: "Broadband Services",
+          subcategory: prod.subcategory || "Broadband",
+          shortDescription: `${prod.shortDescription || ""} (${dur.label} plan)`.trim(),
+          imageUrl: img || prod.imageUrl || "/1month.jpg",
+          sku: `${prod.sku || prod.id}-${dur.key}`,
+          features: prod.features,
+          pricingTable: {
+            columns: ["Speed", "Price"],
+            rows: priceRows,
+            durationImages: { [dur.key]: img || prod.imageUrl || "/1month.jpg" }
+          }
+        };
+        expanded.push(derived);
+      }
+    } else {
+      // Not an aggregated broadband product — keep as-is
+      expanded.push(prod);
+    }
+  }
+
+  return expanded;
+}
+
 export function ProductsSection() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedLaptopSubcategory, setSelectedLaptopSubcategory] = useState("All");
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [showAllProducts, setShowAllProducts] = useState(false);
 
-  /**
-   * Normalize categories:
-   * - If a product is still under "Internet Service Solutions" but is clearly broadband/triple-play related,
-   *   treat it as "Broadband Services" (prevents it from showing under Internet Service Solutions).
-   */
-  const normalizedProducts: Product[] = (products as Product[]).map((p) => {
-    const combined = `${p.name || ""} ${p.subcategory || ""} ${p.category || ""}`.toLowerCase();
-    const broadbandKeywords = /(broadband|xfiber|triple play|triple-play|ott|iptv|landline)/i;
-    if (p.category === "Internet Service Solutions" && broadbandKeywords.test(combined)) {
+  // 1) Normalize categories: move any broadband-like items out of Internet Service Solutions into Broadband Services
+  const normalized = (products as Product[]).map((p) => {
+    if (p.category === "Internet Service Solutions" && isBroadbandCandidate(p)) {
       return { ...p, category: "Broadband Services" };
     }
     return p;
   });
 
-  // Filter products by category and (for laptops) subcategory
-  let filteredProducts = normalizedProducts.filter((product: Product) => {
+  // 2) Expand broadband aggregated products into per-duration plan cards (only affects broadband products)
+  const expandedProducts = expandBroadbandToPlans(normalized);
+
+  // 3) If user selected Broadband Services but there are NO broadband products in data,
+  //    fallback to the builtin broadbandFallbackPlans
+  const hasBroadbandInData = expandedProducts.some(p => p.category === "Broadband Services");
+  const effectiveProducts = hasBroadbandInData ? expandedProducts : [...expandedProducts, ...broadbandFallbackPlans];
+
+  // 4) Filter products by category and subcategory (laptops)
+  const filteredProducts = effectiveProducts.filter((product: Product) => {
     if (selectedCategory === "All") return true;
     if (selectedCategory !== product.category) return false;
 
     if (selectedCategory === "Refurbished Laptops" && selectedLaptopSubcategory !== "All") {
       return product.subcategory === selectedLaptopSubcategory;
     }
-
     return true;
   });
-
-  /**
-   * If user selected Broadband Services but there are no broadband items in products.json,
-   * use the built-in defaults (so the Broadband Services section will always display four cards).
-   * This avoids forcing you to edit products.json immediately and ensures the UI matches expectations.
-   */
-  const isBroadbandSelected = selectedCategory === "Broadband Services";
-  if (isBroadbandSelected && filteredProducts.filter(p => p.category === "Broadband Services").length === 0) {
-    filteredProducts = broadbandDefaults;
-  }
 
   const displayProducts = showAllProducts ? filteredProducts : filteredProducts.slice(0, 6);
   const hasMoreProducts = filteredProducts.length > 6;
@@ -242,7 +307,6 @@ export function ProductsSection() {
               <Card className="overflow-hidden h-full flex flex-col hover:shadow-elegant-lg transition-all hover-lift">
                 {/* Product Image */}
                 <div className="relative aspect-video bg-muted overflow-hidden">
-                  {/* Improve perceived load time: load first N images eagerly (visible on page) */}
                   <img
                     src={product.imageUrl}
                     alt={product.name}
@@ -269,9 +333,7 @@ export function ProductsSection() {
                   </p>
 
                   <div className="space-y-3 mt-auto">
-                    <p className="text-base font-semibold text-primary">
-                      Request quotation via WhatsApp
-                    </p>
+                    <p className="text-base font-semibold text-primary">Request quotation via WhatsApp</p>
 
                     <a
                       href={getWhatsAppLink()}
@@ -308,9 +370,7 @@ export function ProductsSection() {
 
         {filteredProducts.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">
-              No products found in this category.
-            </p>
+            <p className="text-muted-foreground">No products found in this category.</p>
           </div>
         )}
 
@@ -335,7 +395,7 @@ export function ProductsSection() {
               size="lg"
               onClick={() => {
                 setShowAllProducts(false);
-                document.getElementById('products')?.scrollIntoView({ behavior: 'smooth' });
+                document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
               }}
               className="min-w-[200px]"
             >
@@ -374,22 +434,16 @@ export function ProductsSection() {
                   </div>
 
                   <div>
-                    <p className="text-2xl font-bold text-primary mb-1">
-                      Request quotation via WhatsApp
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      SKU: {selectedProduct.sku}
-                    </p>
+                    <p className="text-2xl font-bold text-primary mb-1">Request quotation via WhatsApp</p>
+                    <p className="text-sm text-muted-foreground mt-1">SKU: {selectedProduct.sku}</p>
                   </div>
 
                   <div>
                     <h4 className="font-semibold mb-2">Description</h4>
-                    <p className="text-muted-foreground leading-relaxed">
-                      {selectedProduct.shortDescription}
-                    </p>
+                    <p className="text-muted-foreground leading-relaxed">{selectedProduct.shortDescription}</p>
                   </div>
 
-                  {/* Features for ISP/CCTV */}
+                  {/* Features */}
                   {selectedProduct.features && selectedProduct.features.length > 0 && (
                     <div className="space-y-3 p-4 rounded-lg bg-muted/50">
                       <h4 className="font-semibold text-sm mb-2">Key Features</h4>
@@ -401,70 +455,17 @@ export function ProductsSection() {
                     </div>
                   )}
 
-                  {/* Pricing Table */}
+                  {/* Pricing Table - for plan-cards we show Speed / Price only */}
                   {selectedProduct.pricingTable && (
                     <div className="space-y-3">
-                      <h4 className="font-semibold text-lg">Pricing Plans</h4>
+                      <h4 className="font-semibold text-lg">Pricing</h4>
 
-                      {/* Duration Images */}
-                      {selectedProduct.pricingTable.durationImages && (
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                          {selectedProduct.pricingTable.durationImages["1_month"] && (
-                            <div className="text-center">
-                              <img
-                                src={selectedProduct.pricingTable.durationImages["1_month"]}
-                                alt="1 Month Plan"
-                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
-                                loading="eager"
-                              />
-                              <p className="text-sm font-medium mt-2">1 Month</p>
-                            </div>
-                          )}
-                          {selectedProduct.pricingTable.durationImages["3_month"] && (
-                            <div className="text-center">
-                              <img
-                                src={selectedProduct.pricingTable.durationImages["3_month"]}
-                                alt="3 Month Plan"
-                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
-                                loading="eager"
-                              />
-                              <p className="text-sm font-medium mt-2">3 Months</p>
-                            </div>
-                          )}
-                          {selectedProduct.pricingTable.durationImages["6_month"] && (
-                            <div className="text-center">
-                              <img
-                                src={selectedProduct.pricingTable.durationImages["6_month"]}
-                                alt="6 Month Plan"
-                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
-                                loading="eager"
-                              />
-                              <p className="text-sm font-medium mt-2">6 Months</p>
-                            </div>
-                          )}
-                          {selectedProduct.pricingTable.durationImages["12_month"] && (
-                            <div className="text-center">
-                              <img
-                                src={selectedProduct.pricingTable.durationImages["12_month"]}
-                                alt="12 Month Plan"
-                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
-                                loading="eager"
-                              />
-                              <p className="text-sm font-medium mt-2">12 Months</p>
-                            </div>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Desktop Table View */}
                       <div className="hidden md:block overflow-x-auto rounded-lg border">
                         <table className="w-full">
                           <thead>
                             <tr className="bg-muted/50">
                               {selectedProduct.pricingTable.columns.map((col, idx) => (
-                                <th key={idx} className="px-4 py-3 text-left font-semibold text-sm">
-                                  {col}
-                                </th>
+                                <th key={idx} className="px-4 py-3 text-left font-semibold text-sm">{col}</th>
                               ))}
                             </tr>
                           </thead>
@@ -472,10 +473,8 @@ export function ProductsSection() {
                             {selectedProduct.pricingTable.rows.map((row, idx) => (
                               <tr key={idx} className="border-t hover:bg-muted/30 transition-colors">
                                 <td className="px-4 py-3 font-semibold">{row.mbps} Mbps</td>
-                                <td className="px-4 py-3">₹{row["1_month"]}</td>
-                                <td className="px-4 py-3">₹{row["3_month"]}</td>
-                                <td className="px-4 py-3">₹{row["6_month"]}</td>
-                                <td className="px-4 py-3 text-primary font-semibold">₹{row["12_month"]}</td>
+                                {/* if derived plan rows use `price` field, print that; otherwise attempt to show 12_month or first available price */}
+                                <td className="px-4 py-3 text-primary font-semibold">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</td>
                               </tr>
                             ))}
                           </tbody>
@@ -487,23 +486,9 @@ export function ProductsSection() {
                         {selectedProduct.pricingTable.rows.map((row, idx) => (
                           <div key={idx} className="p-4 rounded-lg border bg-card">
                             <h5 className="font-bold text-lg mb-3">{row.mbps} Mbps</h5>
-                            <div className="grid grid-cols-2 gap-2 text-sm">
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">1 Month:</span>
-                                <span className="font-semibold">₹{row["1_month"]}</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">3 Months:</span>
-                                <span className="font-semibold">₹{row["3_month"]}</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">6 Months:</span>
-                                <span className="font-semibold">₹{row["6_month"]}</span>
-                              </div>
-                              <div className="flex justify-between">
-                                <span className="text-muted-foreground">12 Months:</span>
-                                <span className="font-semibold text-primary">₹{row["12_month"]}</span>
-                              </div>
+                            <div className="flex justify-between text-sm">
+                              <span className="text-muted-foreground">Price:</span>
+                              <span className="font-semibold text-primary">₹{(row as any).price ?? (row as any)["12_month"] ?? (row as any)["6_month"] ?? (row as any)["3_month"] ?? (row as any)["1_month"] ?? "-"}</span>
                             </div>
                           </div>
                         ))}
@@ -514,24 +499,14 @@ export function ProductsSection() {
                   {/* Specifications Note */}
                   <div className="p-4 rounded-lg bg-muted/50">
                     <p className="text-sm text-muted-foreground">
-                      Full specifications, pricing, and availability details are provided upon request.
-                      Contact us via WhatsApp for a detailed quotation tailored to your needs.
+                      Full specifications, pricing, and availability details are provided upon request. Contact us via WhatsApp for a detailed quotation tailored to your needs.
                     </p>
                   </div>
 
                   {/* CTA Button */}
                   <div className="pt-4">
-                    <a
-                      href={getWhatsAppLink()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <Button
-                        variant="default"
-                        size="lg"
-                        className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white"
-                      >
+                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="block">
+                      <Button variant="default" size="lg" className="w-full bg-[#25D366] hover:bg-[#20BD5A] text-white">
                         <svg className="mr-2 h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden>
                           <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                         </svg>
