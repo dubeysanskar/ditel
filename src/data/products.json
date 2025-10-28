@@ -432,7 +432,7 @@
   {
     "id": "wireless-networking",
     "name": "Wireless Networking",
-    "category": "ISP Solutions",
+    "category": "Internet Service Solutions",
     "subcategory": "Networking",
     "shortDescription": "Seamless wireless connectivity across your property. Enterprise-grade WiFi with unified management, coverage planning, and high-speed internet access throughout.",
     "imageUrl": "/ispcctv/WIRELESS NETWORKING.jpeg",
@@ -464,7 +464,7 @@
   {
     "id": "conference-room",
     "name": "Conference Room Solutions",
-    "category": "ISP Solutions",
+    "category": "Internet Service Solutions",
     "subcategory": "AV Solutions",
     "shortDescription": "Professional audio-video solutions for meetings. Video conferencing systems, wireless presentation, sound systems, and lighting control for modern conference rooms.",
     "imageUrl": "/ispcctv/CONFERENCE ROOM SOLUTIONS.jpg",
@@ -496,7 +496,7 @@
   {
     "id": "proav-solution",
     "name": "Pro AV Solution",
-    "category": "ISP Solutions",
+    "category": "Internet Service Solutions",
     "subcategory": "AV Solutions",
     "shortDescription": "Professional audiovisual integration for commercial spaces. Digital signage, video walls, sound reinforcement, and presentation systems for businesses and institutions.",
     "imageUrl": "/ispcctv/PRO AV SOLUTION.jpeg",
@@ -528,7 +528,7 @@
   {
     "id": "epabx-solution",
     "name": "EPABX Solution",
-    "category": "ISP Solutions",
+    "category": "Internet Service Solutions",
     "subcategory": "Communication",
     "shortDescription": "Modern business phone systems from 8 to 896 users. IP-ready EPABX with VoIP support, call routing, voicemail, and mobile integration for seamless communication.",
     "imageUrl": "/ispcctv/EPABX SOLUTION.jpeg",
@@ -544,7 +544,7 @@
   {
     "id": "xfiber-tripleplay",
     "name": "XFiber Broadband — Triple Play (Broadband, Landline, OTT/IPTV)",
-    "category": "ISP Solutions",
+    "category": "Internet Service Solutions",
     "subcategory": "Broadband",
     "shortDescription": "XFiber Triple Play — high-speed broadband, landline and OTT/IPTV packages with flexible subscription durations. Contact us to subscribe or for on-site installation.",
     "imageUrl": "/ispcctv/XFiber Pricing Updated.jpeg",
@@ -562,7 +562,13 @@
         { "mbps": 200, "1_month": 699, "3_month": 649, "6_month": 599, "12_month": 499 },
         { "mbps": 300, "1_month": 799, "3_month": 749, "6_month": 649, "12_month": 549 },
         { "mbps": 400, "1_month": 899, "3_month": 849, "6_month": 699, "12_month": 649 }
-      ]
+      ],
+      "durationImages": {
+        "1_month": "/1month.jpg",
+        "3_month": "/3month.jpg",
+        "6_month": "/6month.jpg",
+        "12_month": "/12months.jpg"
+      }
     },
     "sku": "XFIBER-TP-001"
   }

@@ -18,6 +18,12 @@ interface PricingRow {
 interface PricingTable {
   columns: string[];
   rows: PricingRow[];
+  durationImages?: {
+    "1_month"?: string;
+    "3_month"?: string;
+    "6_month"?: string;
+    "12_month"?: string;
+  };
 }
 
 interface Product {
@@ -32,7 +38,7 @@ interface Product {
   pricingTable?: PricingTable;
 }
 
-const categories = ["All", "Refurbished Laptops", "ISP Solutions", "CCTV Solutions"];
+const categories = ["All", "Refurbished Laptops", "Internet Service Solutions", "CCTV Solutions"];
 const laptopSubcategories = [
   "All",
   "Laptop",
@@ -294,6 +300,52 @@ export function ProductsSection() {
                   {selectedProduct.pricingTable && (
                     <div className="space-y-3">
                       <h4 className="font-semibold text-lg">Pricing Plans</h4>
+                      
+                      {/* Duration Images */}
+                      {selectedProduct.pricingTable.durationImages && (
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                          {selectedProduct.pricingTable.durationImages["1_month"] && (
+                            <div className="text-center">
+                              <img
+                                src={selectedProduct.pricingTable.durationImages["1_month"]}
+                                alt="1 Month Plan"
+                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                              />
+                              <p className="text-sm font-medium mt-2">1 Month</p>
+                            </div>
+                          )}
+                          {selectedProduct.pricingTable.durationImages["3_month"] && (
+                            <div className="text-center">
+                              <img
+                                src={selectedProduct.pricingTable.durationImages["3_month"]}
+                                alt="3 Month Plan"
+                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                              />
+                              <p className="text-sm font-medium mt-2">3 Months</p>
+                            </div>
+                          )}
+                          {selectedProduct.pricingTable.durationImages["6_month"] && (
+                            <div className="text-center">
+                              <img
+                                src={selectedProduct.pricingTable.durationImages["6_month"]}
+                                alt="6 Month Plan"
+                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                              />
+                              <p className="text-sm font-medium mt-2">6 Months</p>
+                            </div>
+                          )}
+                          {selectedProduct.pricingTable.durationImages["12_month"] && (
+                            <div className="text-center">
+                              <img
+                                src={selectedProduct.pricingTable.durationImages["12_month"]}
+                                alt="12 Month Plan"
+                                className="w-full h-auto rounded-lg border shadow-sm hover:shadow-md transition-shadow"
+                              />
+                              <p className="text-sm font-medium mt-2">12 Months</p>
+                            </div>
+                          )}
+                        </div>
+                      )}
                       
                       {/* Desktop Table View */}
                       <div className="hidden md:block overflow-x-auto rounded-lg border">
