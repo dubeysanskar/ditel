@@ -276,3 +276,7 @@ For questions or issues, contact:
 - Icons: Lucide React
 - Images: Unsplash
 - UI Components: shadcn/ui
+
+
+
+all past public api have been deleted
